@@ -3,50 +3,33 @@
 import { Html5Qrcode } from "html5-qrcode";
 import { useEffect } from "react";
 
-type Props = {
-  onScanSuccess: (ean: string) => void;
-};
-
 export default function BarcodeScanner({
-  onScanSuccess,
-}: Props) {
+  onScan,
+}: {
+  onScan: (ean: string) => void;
+}) {
   useEffect(() => {
-    const html5QrCode = new Html5Qrcode("reader");
+    const scanner = new Html5Qrcode("reader");
 
-    Html5Qrcode.getCameras()
-      .then((devices) => {
-        console.log("CAMERAS:", devices);
-
-        if (devices.length === 0) {
-          alert("Ni najdenih kamer");
-          return;
-        }
-
-        alert("Kamere najdene: " + devices.length);
-        console.log(devices);
-
-        return html5QrCode.start(
-          { facingMode: "environment" },
-          {
-            fps: 10,
-            qrbox: 250,
-          },
-          (decodedText) => {
-            onScanSuccess(decodedText);
-            html5QrCode.stop();
-          },
-          () => {}
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Napaka kamere: " + err);
-      });
+    scanner
+      .start(
+        { facingMode: "environment" },
+        {
+          fps: 10,
+          qrbox: 250,
+        },
+        (decodedText) => {
+          scanner.stop();
+          onScan(decodedText);
+        },
+        () => {}
+      )
+      .catch(console.error);
 
     return () => {
-      html5QrCode.stop().catch(() => {});
+      scanner.stop().catch(() => {});
     };
-  }, [onScanSuccess]);
+  }, [onScan]);
 
   return <div id="reader" />;
 }

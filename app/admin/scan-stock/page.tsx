@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import BarcodeScanner from "@/components/BarcodeScanner";
 
 export default function ScanStockPage() {
   const [ean, setEan] = useState("");
@@ -10,6 +11,7 @@ export default function ScanStockPage() {
   const [quantity, setQuantity] = useState(1);
   const [batchNumber, setBatchNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
+  const [showScanner, setShowScanner] = useState(false);
 
   async function findMedicine() {
     const { data } = await supabase
@@ -68,12 +70,36 @@ export default function ScanStockPage() {
             className="border p-2 w-full mb-4"
           />
 
-          <button
-            onClick={findMedicine}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            Poišči zdravilo
-          </button>
+          <div className="flex gap-2 mb-4">
+            <button
+              onClick={findMedicine}
+              className="bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Poišči zdravilo
+            </button>
+
+            <button
+              onClick={() => setShowScanner(true)}
+              className="bg-green-600 text-white px-4 py-2 rounded"
+            >
+              📷 Skeniraj
+            </button>
+          </div>
+
+          {showScanner && (
+            <div className="mb-4">
+              <BarcodeScanner
+                onScan={(code) => {
+                  setEan(code);
+                  setShowScanner(false);
+
+                  setTimeout(() => {
+                    findMedicine();
+                  }, 300);
+                }}
+              />
+            </div>
+          )}
         </>
       ) : (
         <>
