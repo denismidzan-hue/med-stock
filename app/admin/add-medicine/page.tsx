@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import BarcodeScanner from "@/components/BarcodeScanner";
 
 export default function AddMedicinePage() {
   const [ean, setEan] = useState("");
   const [name, setName] = useState("");
   const [minStock, setMinStock] = useState(10);
+  const [showScanner, setShowScanner] = useState(false);
 
   async function saveMedicine() {
     const { error } = await supabase
@@ -36,6 +38,24 @@ export default function AddMedicinePage() {
       <h1 className="text-3xl font-bold mb-6">
         Dodaj novo zdravilo
       </h1>
+
+      <button
+        onClick={() => setShowScanner(true)}
+        className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+      >
+        📷 Skeniraj EAN
+      </button>
+
+      {showScanner && (
+        <div className="mb-4">
+          <BarcodeScanner
+            onScan={(code) => {
+              setEan(code);
+              setShowScanner(false);
+            }}
+          />
+        </div>
+      )}
 
       <input
         value={ean}
