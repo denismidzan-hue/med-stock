@@ -1,54 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const isActive = (href: string) => pathname === href;
 
   return (
     <div className="min-h-screen bg-slate-100 flex">
-      {/* Mobile menu button */}
-      <button
-        onClick={() => setMobileMenuOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-md border border-slate-200"
-      >
-        <Menu size={24} />
-      </button>
-
-      {/* Mobile overlay */}
-      {mobileMenuOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black/50 z-40"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-
       {/* Sidebar */}
-      <aside className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col transform transition-transform duration-300 shadow-2xl md:shadow-none ${
-        mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-      }`}>
-        <div className="border-b border-slate-200 relative">
-          {/* Mobile */}
-          <div className="flex md:hidden justify-center py-4">
-            <img
-              src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
-              alt="Arbor Mea"
-              className="h-12 w-auto"
-            />
-          </div>
-
-          {/* Desktop */}
-          <div className="hidden md:flex flex-col items-center py-6">
+      <aside className="hidden md:flex flex-col inset-y-0 left-0 w-72 bg-white border-r border-slate-200">
+        <div className="border-b border-slate-200">
+          <div className="flex flex-col items-center py-6">
             <img
               src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
               alt="Arbor Mea"
@@ -58,14 +27,6 @@ export default function AdminLayout({
               Evidenca zdravil
             </p>
           </div>
-
-          {/* Close button */}
-          <button
-            onClick={() => setMobileMenuOpen(false)}
-            className="md:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-200 text-slate-900 bg-white border border-slate-300"
-          >
-            <X size={24} />
-          </button>
         </div>
 
         <nav className="flex-1 p-3 md:p-4 space-y-1 md:space-y-2">
@@ -76,7 +37,6 @@ export default function AdminLayout({
                 ? 'bg-emerald-50 text-emerald-700' 
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
-            onClick={() => setMobileMenuOpen(false)}
           >
             🏠 Pregled
           </Link>
@@ -88,7 +48,6 @@ export default function AdminLayout({
                 ? 'bg-emerald-50 text-emerald-700' 
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
-            onClick={() => setMobileMenuOpen(false)}
           >
             💊 Zdravila
           </Link>
@@ -100,7 +59,6 @@ export default function AdminLayout({
                 ? 'bg-emerald-50 text-emerald-700' 
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
-            onClick={() => setMobileMenuOpen(false)}
           >
             📦 Dodaj zalogo
           </Link>
@@ -112,7 +70,6 @@ export default function AdminLayout({
                 ? 'bg-emerald-50 text-emerald-700' 
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
-            onClick={() => setMobileMenuOpen(false)}
           >
             📋 Zaloga
           </Link>
@@ -124,7 +81,6 @@ export default function AdminLayout({
                 ? 'bg-emerald-50 text-emerald-700' 
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
-            onClick={() => setMobileMenuOpen(false)}
           >
             📊 Skupna zaloga
           </Link>
@@ -136,7 +92,6 @@ export default function AdminLayout({
                 ? 'bg-emerald-50 text-emerald-700' 
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
-            onClick={() => setMobileMenuOpen(false)}
           >
             📈 Poraba
           </Link>
@@ -148,7 +103,6 @@ export default function AdminLayout({
                 ? 'bg-emerald-50 text-emerald-700' 
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
-            onClick={() => setMobileMenuOpen(false)}
           >
             🛒 Naročilo
           </Link>
