@@ -26,7 +26,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 overflow-hidden">
+    <div className="h-screen w-screen bg-slate-100 flex items-center justify-center p-4 overflow-hidden fixed inset-0">
       <div className="bg-white rounded-2xl border border-slate-200 p-8 w-full max-w-md shadow-sm">
         <div className="flex flex-col items-center mb-8">
           <img
