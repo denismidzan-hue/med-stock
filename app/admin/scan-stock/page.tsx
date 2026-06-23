@@ -14,27 +14,31 @@ export default function ScanStockPage() {
   const [showScanner, setShowScanner] = useState(false);
 
   function parseGS1(data: string) {
-    alert("NOV PARSER");
-
     const cleaned = data.replace(/\u001d/g, "");
 
-    alert(cleaned);
-
-    const gtinMatch = cleaned.match(/^01(\d{14})/);
-    const expMatch = cleaned.match(/17(\d{6})/);
+    const gtin = cleaned.match(/01(\d{14})/)?.[1] || "";
+    const expiry = cleaned.match(/17(\d{6})/)?.[1] || "";
 
     let lot = "";
+    let serial = "";
 
-    const lotMatch = cleaned.match(/10([A-Z0-9]+)$/);
+    const lotPos = cleaned.indexOf("10");
+    const serialPos = cleaned.indexOf("21", lotPos + 2);
 
-    if (lotMatch) {
-      lot = lotMatch[1];
+    if (lotPos !== -1) {
+      if (serialPos !== -1) {
+        lot = cleaned.substring(lotPos + 2, serialPos);
+        serial = cleaned.substring(serialPos + 2);
+      } else {
+        lot = cleaned.substring(lotPos + 2);
+      }
     }
 
     return {
-      gtin: gtinMatch?.[1] || "",
-      expiry: expMatch?.[1] || "",
+      gtin,
+      expiry,
       lot,
+      serial,
     };
   }
 
@@ -134,7 +138,6 @@ export default function ScanStockPage() {
 
                 const parsed = parseGS1(code);
 
-                console.log(parsed);
                 alert(JSON.stringify(parsed));
 
                 findMedicineByCode(parsed.gtin);
