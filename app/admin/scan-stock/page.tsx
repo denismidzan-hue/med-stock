@@ -14,6 +14,8 @@ export default function ScanStockPage() {
   const [showScanner, setShowScanner] = useState(false);
 
   function parseGS1(data: string) {
+    alert("NOV PARSER");
+
     const cleaned = data.replace(/\u001d/g, "");
 
     const gtinMatch = cleaned.match(/^01(\d{14})/);
