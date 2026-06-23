@@ -28,7 +28,12 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 overflow-hidden">
       <div className="bg-white rounded-2xl border border-slate-200 p-8 w-full max-w-md shadow-sm">
-        <div className="mb-8">
+        <div className="flex flex-col items-center mb-8">
+          <img
+            src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
+            alt="Arbor Mea"
+            className="h-16 w-auto mb-4"
+          />
           <h1 className="text-2xl font-bold text-slate-900 text-center">Evidenca zdravil</h1>
           <p className="text-slate-500 mt-2 text-center">Vnesite geslo za vstop</p>
         </div>
