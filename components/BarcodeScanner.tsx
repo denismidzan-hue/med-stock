@@ -10,6 +10,7 @@ export default function BarcodeScanner({
 }) {
   useEffect(() => {
     const scanner = new Html5Qrcode("reader");
+    let scanned = false;
 
     scanner
       .start(
@@ -18,8 +19,15 @@ export default function BarcodeScanner({
           fps: 10,
           qrbox: 250,
         },
-        (decodedText) => {
-          scanner.stop();
+        async (decodedText) => {
+          if (scanned) return;
+
+          scanned = true;
+
+          try {
+            await scanner.stop();
+          } catch {}
+
           onScan(decodedText);
         },
         () => {}
@@ -27,7 +35,9 @@ export default function BarcodeScanner({
       .catch(console.error);
 
     return () => {
-      scanner.stop().catch(() => {});
+      if (!scanned) {
+        scanner.stop().catch(() => {});
+      }
     };
   }, [onScan]);
 

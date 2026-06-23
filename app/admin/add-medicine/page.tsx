@@ -51,7 +51,10 @@ export default function AddMedicinePage() {
           <BarcodeScanner
             onScan={(code) => {
               setEan(code);
-              setShowScanner(false);
+
+              setTimeout(() => {
+                setShowScanner(false);
+              }, 500);
             }}
           />
         </div>
