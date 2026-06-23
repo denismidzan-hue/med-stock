@@ -17,7 +17,7 @@ export default function AdminLayout({
       {/* Mobile header */}
       <header className="md:hidden bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/admin" className="flex items-center gap-3">
             <img
               src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
               alt="Arbor Mea"
