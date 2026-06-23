@@ -109,7 +109,8 @@ export default function ScanStockPage() {
                   setShowScanner(false);
                 }, 500);
 
-                findMedicineByCode(code);
+                console.log("SCAN:", code);
+                alert(code);
               }}
             />
           )}
