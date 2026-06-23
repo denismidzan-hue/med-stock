@@ -13,7 +13,23 @@ export default function AdminLayout({
   const isActive = (href: string) => pathname === href;
 
   return (
-    <div className="min-h-screen bg-slate-100 flex">
+    <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row">
+      {/* Mobile header */}
+      <header className="md:hidden bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
+              alt="Arbor Mea"
+              className="h-10 w-auto"
+            />
+          </Link>
+          <span className="text-sm font-medium text-slate-600">
+            Admin
+          </span>
+        </div>
+      </header>
+
       {/* Sidebar */}
       <aside className="hidden md:flex flex-col inset-y-0 left-0 w-72 bg-white border-r border-slate-200">
         <div className="border-b border-slate-200">
