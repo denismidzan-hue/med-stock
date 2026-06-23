@@ -76,7 +76,7 @@ export default function AdminPage() {
       <div className="grid md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <Pill size={32} className="text-blue-600" />
+            <Pill size={32} />
             <div className="text-sm text-slate-500">
               Skupno zdravil
             </div>
@@ -88,7 +88,7 @@ export default function AdminPage() {
 
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <Package size={32} className="text-green-600" />
+            <Package size={32} />
             <div className="text-sm text-slate-500">
               Skupna zaloga
             </div>
@@ -100,7 +100,7 @@ export default function AdminPage() {
 
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <AlertTriangle size={32} className="text-red-600" />
+            <AlertTriangle size={32} />
             <div className="text-sm text-slate-500">
               Pod minimumom
             </div>
@@ -112,7 +112,7 @@ export default function AdminPage() {
 
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <CalendarClock size={32} className="text-yellow-600" />
+            <CalendarClock size={32} />
             <div className="text-sm text-slate-500">
               Pred potekom
             </div>
