@@ -16,20 +16,15 @@ export default function ScanStockPage() {
   function parseGS1(data: string) {
     const cleaned = data.replace(/\u001d/g, "");
 
-    const gtinMatch = cleaned.match(/01(\d{14})/);
+    const gtinMatch = cleaned.match(/^01(\d{14})/);
     const expMatch = cleaned.match(/17(\d{6})/);
 
     let lot = "";
 
-    const lotStart = cleaned.indexOf("10");
-    const serialStart = cleaned.indexOf("21");
+    const lotMatch = cleaned.match(/10([A-Z0-9]+)$/);
 
-    if (lotStart !== -1) {
-      if (serialStart !== -1) {
-        lot = cleaned.substring(lotStart + 2, serialStart);
-      } else {
-        lot = cleaned.substring(lotStart + 2);
-      }
+    if (lotMatch) {
+      lot = lotMatch[1];
     }
 
     return {
