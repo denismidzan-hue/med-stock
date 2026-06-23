@@ -7,6 +7,8 @@ import { supabase } from "@/lib/supabase";
 export default function AdminPage() {
   const [lowStock, setLowStock] = useState<any[]>([]);
   const [expiring, setExpiring] = useState<any[]>([]);
+  const [totalMedicines, setTotalMedicines] = useState(0);
+  const [totalStock, setTotalStock] = useState(0);
 
   useEffect(() => {
     loadDashboard();
@@ -39,6 +41,15 @@ export default function AdminPage() {
 
     if (!medicines) return;
 
+    setTotalMedicines(medicines.length);
+
+    const stockCount = batches.reduce(
+      (sum, b) => sum + b.quantity,
+      0
+    );
+
+    setTotalStock(stockCount);
+
     const low = medicines.filter((med) => {
       const stock = batches
         .filter((b) => b.medicine_id === med.id)
@@ -56,45 +67,83 @@ export default function AdminPage() {
         Admin Dashboard
       </h1>
 
-      <div className="flex gap-4 mb-8">
+      <div className="grid md:grid-cols-4 gap-4 mb-8">
+        <div className="bg-blue-600 text-white rounded-xl p-5 shadow">
+          <div className="text-sm opacity-80">
+            Skupno zdravil
+          </div>
+          <div className="text-3xl font-bold">
+            {totalMedicines}
+          </div>
+        </div>
+
+        <div className="bg-green-600 text-white rounded-xl p-5 shadow">
+          <div className="text-sm opacity-80">
+            Skupna zaloga
+          </div>
+          <div className="text-3xl font-bold">
+            {totalStock}
+          </div>
+        </div>
+
+        <div className="bg-red-600 text-white rounded-xl p-5 shadow">
+          <div className="text-sm opacity-80">
+            Pod minimumom
+          </div>
+          <div className="text-3xl font-bold">
+            {lowStock.length}
+          </div>
+        </div>
+
+        <div className="bg-yellow-500 text-white rounded-xl p-5 shadow">
+          <div className="text-sm opacity-80">
+            Pred potekom
+          </div>
+          <div className="text-3xl font-bold">
+            {expiring.length}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-4 mb-8">
         <Link
           href="/admin/add-medicine"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-blue-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
         >
           Dodaj zdravilo
         </Link>
 
         <Link
           href="/admin/scan-stock"
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-green-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
         >
           Dodaj zalogo
         </Link>
 
         <Link
           href="/admin/inventory"
-          className="bg-purple-600 text-white px-4 py-2 rounded"
+          className="bg-purple-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
         >
           Zaloga
         </Link>
 
         <Link
           href="/admin/transactions"
-          className="bg-orange-600 text-white px-4 py-2 rounded"
+          className="bg-orange-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
         >
           Poraba
         </Link>
 
         <Link
           href="/admin/orders"
-          className="bg-red-600 text-white px-4 py-2 rounded"
+          className="bg-red-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
         >
           Naročilo
         </Link>
 
         <Link
           href="/admin/stock-summary"
-          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          className="bg-indigo-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
         >
           Skupna zaloga
         </Link>
@@ -102,7 +151,7 @@ export default function AdminPage() {
 
       <div className="grid md:grid-cols-2 gap-6">
 
-        <div className="border rounded p-4">
+        <div className="bg-white border rounded-xl p-5 shadow">
           <h2 className="text-xl font-bold text-red-600 mb-3">
             Nizka zaloga
           </h2>
@@ -121,7 +170,7 @@ export default function AdminPage() {
           )}
         </div>
 
-        <div className="border rounded p-4">
+        <div className="bg-white border rounded-xl p-5 shadow">
           <h2 className="text-xl font-bold text-yellow-600 mb-3">
             Rok uporabe &lt; 30 dni
           </h2>
