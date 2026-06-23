@@ -30,7 +30,7 @@ export default function AdminLayout({
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col transform transition-transform duration-300 ${
+      <aside className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col transform transition-transform duration-300 shadow-2xl md:shadow-none ${
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}>
         <div className="p-4 md:p-6 border-b flex items-center justify-between bg-slate-50">
@@ -38,13 +38,13 @@ export default function AdminLayout({
             <h1 className="text-xl md:text-2xl font-bold text-slate-900">
               💊 Evidenca zdravil
             </h1>
-            <p className="text-xs md:text-sm text-slate-600 mt-1">
+            <p className="text-xs md:text-sm text-slate-700 mt-1">
               Administracija
             </p>
           </div>
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="md:hidden p-2 rounded-lg hover:bg-slate-200 text-slate-900"
+            className="md:hidden p-2 rounded-lg hover:bg-slate-200 text-slate-900 bg-white border border-slate-300"
           >
             <X size={24} />
           </button>
