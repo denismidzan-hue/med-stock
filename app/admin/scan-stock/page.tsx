@@ -108,7 +108,7 @@ export default function ScanStockPage() {
   return (
     <div className="p-8 max-w-xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">
-        Dodaj zalogo TEST123
+        Dodaj zalogo
       </h1>
 
       {!medicine ? (
@@ -139,11 +139,7 @@ export default function ScanStockPage() {
           {showScanner && (
             <BarcodeScanner
               onScan={(code) => {
-                alert("SKEN USPEL");
-
                 const parsed = parseGS1(code);
-
-                alert(JSON.stringify(parsed));
 
                 findMedicineByCode(parsed.gtin);
 
@@ -177,6 +173,7 @@ export default function ScanStockPage() {
             onChange={(e) => setBatchNumber(e.target.value)}
             placeholder="Serija"
             className="border p-2 w-full mb-4"
+            readOnly
           />
 
           <input
@@ -184,6 +181,7 @@ export default function ScanStockPage() {
             value={expiryDate}
             onChange={(e) => setExpiryDate(e.target.value)}
             className="border p-2 w-full mb-4"
+            readOnly
           />
 
           <input
