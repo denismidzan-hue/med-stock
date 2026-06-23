@@ -33,12 +33,12 @@ export default function AdminLayout({
       <aside className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col transform transition-transform duration-300 ${
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}>
-        <div className="p-6 border-b flex items-center justify-between">
+        <div className="p-4 md:p-6 border-b flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">
+            <h1 className="text-xl md:text-2xl font-bold text-slate-900">
               💊 Evidenca zdravil
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs md:text-sm text-slate-500 mt-1">
               Administracija
             </p>
           </div>
@@ -50,10 +50,10 @@ export default function AdminLayout({
           </button>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-3 md:p-4 space-y-1 md:space-y-2">
           <Link
             href="/admin"
-            className="block px-4 py-3 rounded-xl hover:bg-slate-100 transition"
+            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base"
             onClick={() => setMobileMenuOpen(false)}
           >
             🏠 Pregled
@@ -61,7 +61,7 @@ export default function AdminLayout({
 
           <Link
             href="/admin/add-medicine"
-            className="block px-4 py-3 rounded-xl hover:bg-slate-100 transition"
+            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base"
             onClick={() => setMobileMenuOpen(false)}
           >
             💊 Zdravila
@@ -69,7 +69,7 @@ export default function AdminLayout({
 
           <Link
             href="/admin/scan-stock"
-            className="block px-4 py-3 rounded-xl hover:bg-slate-100 transition"
+            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base"
             onClick={() => setMobileMenuOpen(false)}
           >
             📦 Dodaj zalogo
@@ -77,7 +77,7 @@ export default function AdminLayout({
 
           <Link
             href="/admin/inventory"
-            className="block px-4 py-3 rounded-xl hover:bg-slate-100 transition"
+            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base"
             onClick={() => setMobileMenuOpen(false)}
           >
             📋 Zaloga
@@ -85,7 +85,7 @@ export default function AdminLayout({
 
           <Link
             href="/admin/stock-summary"
-            className="block px-4 py-3 rounded-xl hover:bg-slate-100 transition"
+            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base"
             onClick={() => setMobileMenuOpen(false)}
           >
             📊 Skupna zaloga
@@ -93,7 +93,7 @@ export default function AdminLayout({
 
           <Link
             href="/admin/transactions"
-            className="block px-4 py-3 rounded-xl hover:bg-slate-100 transition"
+            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base"
             onClick={() => setMobileMenuOpen(false)}
           >
             📈 Poraba
@@ -101,7 +101,7 @@ export default function AdminLayout({
 
           <Link
             href="/admin/orders"
-            className="block px-4 py-3 rounded-xl hover:bg-slate-100 transition"
+            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base"
             onClick={() => setMobileMenuOpen(false)}
           >
             🛒 Naročilo
