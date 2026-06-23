@@ -13,6 +13,20 @@ export default function ScanStockPage() {
   const [expiryDate, setExpiryDate] = useState("");
   const [showScanner, setShowScanner] = useState(false);
 
+  function parseGS1(data: string) {
+    const cleaned = data.replace(/\u001d/g, "");
+
+    const gtinMatch = cleaned.match(/01(\d{14})/);
+    const expMatch = cleaned.match(/17(\d{6})/);
+    const lotMatch = cleaned.match(/10([A-Z0-9]+)/);
+
+    return {
+      gtin: gtinMatch?.[1] || "",
+      expiry: expMatch?.[1] || "",
+      lot: lotMatch?.[1] || "",
+    };
+  }
+
   async function findMedicine() {
     const { data } = await supabase
       .from("medicines")
@@ -109,8 +123,21 @@ export default function ScanStockPage() {
                   setShowScanner(false);
                 }, 500);
 
-                console.log("SCAN:", code);
-                alert(code);
+                const parsed = parseGS1(code);
+
+                findMedicineByCode(parsed.gtin);
+
+                if (parsed.lot) {
+                  setBatchNumber(parsed.lot);
+                }
+
+                if (parsed.expiry.length === 6) {
+                  const yy = parsed.expiry.slice(0, 2);
+                  const mm = parsed.expiry.slice(2, 4);
+                  const dd = parsed.expiry.slice(4, 6);
+
+                  setExpiryDate(`20${yy}-${mm}-${dd}`);
+                }
               }}
             />
           )}
