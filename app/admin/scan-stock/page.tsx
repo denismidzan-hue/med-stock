@@ -18,12 +18,24 @@ export default function ScanStockPage() {
 
     const gtinMatch = cleaned.match(/01(\d{14})/);
     const expMatch = cleaned.match(/17(\d{6})/);
-    const lotMatch = cleaned.match(/10([A-Z0-9]+)/);
+
+    let lot = "";
+
+    const lotStart = cleaned.indexOf("10");
+    const serialStart = cleaned.indexOf("21");
+
+    if (lotStart !== -1) {
+      if (serialStart !== -1) {
+        lot = cleaned.substring(lotStart + 2, serialStart);
+      } else {
+        lot = cleaned.substring(lotStart + 2);
+      }
+    }
 
     return {
       gtin: gtinMatch?.[1] || "",
       expiry: expMatch?.[1] || "",
-      lot: lotMatch?.[1] || "",
+      lot,
     };
   }
 
