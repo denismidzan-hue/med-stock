@@ -16,14 +16,19 @@ export default function ScanStockPage() {
   function parseGS1(data: string) {
     const cleaned = data.replace(/\u001d/g, "");
 
-    const gtin = cleaned.match(/01(\d{14})/)?.[1] || "";
-    const expiry = cleaned.match(/17(\d{6})/)?.[1] || "";
+    const gtin = cleaned.substring(2, 16);
 
+    const expPos = cleaned.indexOf("17");
+    const lotPos = cleaned.indexOf("10", 24);
+    const serialPos = cleaned.indexOf("21", lotPos);
+
+    let expiry = "";
     let lot = "";
     let serial = "";
 
-    const lotPos = cleaned.indexOf("10");
-    const serialPos = cleaned.indexOf("21", lotPos + 2);
+    if (expPos !== -1) {
+      expiry = cleaned.substring(expPos + 2, expPos + 8);
+    }
 
     if (lotPos !== -1) {
       if (serialPos !== -1) {
