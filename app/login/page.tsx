@@ -1,76 +1,66 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
-  async function login() {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
     });
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    const userId = data.user.id;
-
-    console.log("USER ID:", userId);
-
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .single();
-
-    console.log("PROFILE:", profile);
-    console.log("PROFILE ERROR:", profileError);
-
-    if (!profile) {
-      alert("Profil ne obstaja");
-      return;
-    }
-
-    if (profile.role === "admin") {
-      window.location.href = "/admin";
+    if (response.ok) {
+      router.push("/admin");
     } else {
-      window.location.href = "/employee";
+      setError("Napačno geslo");
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-[350px] space-y-4">
-        <h1 className="text-2xl font-bold">
-          Prijava
-        </h1>
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200 p-8 w-full max-w-md shadow-sm">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-slate-900 text-center">Evidenca zdravil</h1>
+          <p className="text-slate-500 mt-2 text-center">Vnesite geslo za vstop</p>
+        </div>
 
-        <input
-          className="border p-2 w-full"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Geslo
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              placeholder="Vnesite geslo"
+              required
+            />
+          </div>
 
-        <input
-          type="password"
-          className="border p-2 w-full"
-          placeholder="Geslo"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          {error && (
+            <div className="bg-red-50 text-red-700 px-4 py-3 rounded-xl text-sm">
+              {error}
+            </div>
+          )}
 
-        <button
-          onClick={login}
-          className="bg-blue-600 text-white w-full p-2 rounded"
-        >
-          Prijava
-        </button>
+          <button
+            type="submit"
+            className="w-full bg-slate-900 text-white font-medium py-3 rounded-xl hover:bg-slate-800 transition"
+          >
+            Vstop
+          </button>
+        </form>
       </div>
     </div>
   );
