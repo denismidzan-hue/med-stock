@@ -119,6 +119,8 @@ export default function ScanStockPage() {
           {showScanner && (
             <BarcodeScanner
               onScan={(code) => {
+                alert("SKEN USPEL");
+
                 const parsed = parseGS1(code);
 
                 console.log(parsed);
