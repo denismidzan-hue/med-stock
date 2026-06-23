@@ -18,6 +18,8 @@ export default function ScanStockPage() {
 
     const cleaned = data.replace(/\u001d/g, "");
 
+    alert(cleaned);
+
     const gtinMatch = cleaned.match(/^01(\d{14})/);
     const expMatch = cleaned.match(/17(\d{6})/);
 
