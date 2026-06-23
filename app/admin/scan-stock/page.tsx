@@ -121,6 +121,9 @@ export default function ScanStockPage() {
               onScan={(code) => {
                 const parsed = parseGS1(code);
 
+                console.log(parsed);
+                alert(JSON.stringify(parsed));
+
                 findMedicineByCode(parsed.gtin);
 
                 if (parsed.lot) {
