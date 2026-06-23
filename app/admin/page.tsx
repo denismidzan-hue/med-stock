@@ -91,6 +91,13 @@ export default function AdminPage() {
         >
           Naročilo
         </Link>
+
+        <Link
+          href="/admin/stock-summary"
+          className="bg-indigo-600 text-white px-4 py-2 rounded"
+        >
+          Skupna zaloga
+        </Link>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
