@@ -47,7 +47,7 @@ export default function LoginPage() {
             className="h-16 w-auto mb-4"
           />
           <h1 className="text-2xl font-bold text-slate-900 text-center">Evidenca zdravil</h1>
-          <p className="text-slate-500 mt-2 text-center">Vnesite geslo za vstop</p>
+          <p className="text-slate-700 mt-2 text-center text-base">Vnesite geslo za vstop</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
