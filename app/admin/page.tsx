@@ -126,44 +126,80 @@ export default function AdminPage() {
       <div className="grid md:grid-cols-3 gap-4 mb-8">
         <Link
           href="/admin/add-medicine"
-          className="bg-blue-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
         >
-          Dodaj zdravilo
+          <div className="text-3xl mb-2">💊</div>
+          <div className="font-bold text-lg">
+            Dodaj zdravilo
+          </div>
+          <div className="text-sm opacity-90">
+            Novo zdravilo v bazo
+          </div>
         </Link>
 
         <Link
           href="/admin/scan-stock"
-          className="bg-green-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
+          className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
         >
-          Dodaj zalogo
+          <div className="text-3xl mb-2">📦</div>
+          <div className="font-bold text-lg">
+            Dodaj zalogo
+          </div>
+          <div className="text-sm opacity-90">
+            Skeniraj Data Matrix
+          </div>
         </Link>
 
         <Link
           href="/admin/inventory"
-          className="bg-purple-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
+          className="bg-gradient-to-r from-purple-500 to-violet-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
         >
-          Zaloga
+          <div className="text-3xl mb-2">📋</div>
+          <div className="font-bold text-lg">
+            Zaloga
+          </div>
+          <div className="text-sm opacity-90">
+            Pregled serij
+          </div>
         </Link>
 
         <Link
           href="/admin/transactions"
-          className="bg-orange-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
+          className="bg-gradient-to-r from-orange-500 to-amber-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
         >
-          Poraba
+          <div className="text-3xl mb-2">📊</div>
+          <div className="font-bold text-lg">
+            Poraba
+          </div>
+          <div className="text-sm opacity-90">
+            Zgodovina porabe
+          </div>
         </Link>
 
         <Link
           href="/admin/orders"
-          className="bg-red-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
+          className="bg-gradient-to-r from-red-500 to-rose-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
         >
-          Naročilo
+          <div className="text-3xl mb-2">📝</div>
+          <div className="font-bold text-lg">
+            Naročilo
+          </div>
+          <div className="text-sm opacity-90">
+            Upravljanje naročil
+          </div>
         </Link>
 
         <Link
           href="/admin/stock-summary"
-          className="bg-indigo-600 text-white p-4 rounded-xl shadow hover:shadow-lg transition"
+          className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
         >
-          Skupna zaloga
+          <div className="text-3xl mb-2">📈</div>
+          <div className="font-bold text-lg">
+            Skupna zaloga
+          </div>
+          <div className="text-sm opacity-90">
+            Pregled zaloge
+          </div>
         </Link>
       </div>
 
