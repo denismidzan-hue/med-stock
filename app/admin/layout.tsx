@@ -16,17 +16,17 @@ export default function AdminLayout({
     <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row">
       {/* Mobile header */}
       <header className="md:hidden bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+        <div className="px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3">
             <img
               src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
               alt="Arbor Mea"
-              className="h-10 w-auto"
+              className="h-14 w-auto"
             />
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
+              EVIDENCA ZDRAVIL
+            </p>
           </Link>
-          <span className="text-sm font-medium text-slate-600">
-            Admin
-          </span>
         </div>
       </header>
 
