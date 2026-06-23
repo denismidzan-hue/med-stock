@@ -206,7 +206,7 @@ export default function AdminPage() {
       <div className="grid md:grid-cols-2 gap-6">
 
         <div className="bg-white border rounded-xl p-5 shadow">
-          <h2 className="text-xl font-bold text-red-600 mb-3">
+          <h2 className="text-xl font-bold text-slate-900 mb-3">
             Nizka zaloga
           </h2>
 
@@ -225,7 +225,7 @@ export default function AdminPage() {
         </div>
 
         <div className="bg-white border rounded-xl p-5 shadow">
-          <h2 className="text-xl font-bold text-yellow-600 mb-3">
+          <h2 className="text-xl font-bold text-slate-900 mb-3">
             Rok uporabe &lt; 30 dni
           </h2>
 
