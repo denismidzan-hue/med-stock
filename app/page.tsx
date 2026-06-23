@@ -16,9 +16,9 @@ export default function Home() {
             <img
               src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
               alt="Arbor Mea"
-              className="h-12 w-auto"
+              className="h-16 w-auto"
             />
-            <p className="hidden md:block text-xs uppercase tracking-[0.2em] text-slate-500">
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
               EVIDENCA ZDRAVIL
             </p>
           </div>
