@@ -1,11 +1,14 @@
 export function parseGS1(data: string) {
   const cleaned = data.replace(/\u001d/g, "");
 
-  const gtin = cleaned.substring(2, 16);
+  let gtin = "";
+  if (cleaned.length >= 16) {
+    gtin = cleaned.substring(2, 16);
+  }
 
   const expPos = cleaned.indexOf("17");
   const lotPos = cleaned.indexOf("10", 24);
-  const serialPos = cleaned.indexOf("21", lotPos);
+  const serialPos = lotPos !== -1 ? cleaned.indexOf("21", lotPos) : -1;
 
   let expiry = "";
   let lot = "";
