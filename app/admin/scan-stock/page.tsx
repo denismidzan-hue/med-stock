@@ -28,6 +28,22 @@ export default function ScanStockPage() {
     setMedicine(data);
   }
 
+  async function findMedicineByCode(code: string) {
+    const { data } = await supabase
+      .from("medicines")
+      .select("*")
+      .eq("ean", code)
+      .single();
+
+    if (!data) {
+      alert("Zdravilo ni najdeno");
+      return;
+    }
+
+    setEan(code);
+    setMedicine(data);
+  }
+
   async function saveBatch() {
     const { error } = await supabase
       .from("batches")
@@ -87,18 +103,15 @@ export default function ScanStockPage() {
           </div>
 
           {showScanner && (
-            <div className="mb-4">
-              <BarcodeScanner
-                onScan={(code) => {
-                  setEan(code);
+            <BarcodeScanner
+              onScan={(code) => {
+                setTimeout(() => {
                   setShowScanner(false);
+                }, 500);
 
-                  setTimeout(() => {
-                    findMedicine();
-                  }, 300);
-                }}
-              />
-            </div>
+                findMedicineByCode(code);
+              }}
+            />
           )}
         </>
       ) : (
