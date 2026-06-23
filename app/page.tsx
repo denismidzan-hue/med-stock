@@ -86,9 +86,9 @@ export default function Home() {
           </div>
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="p-3 rounded-lg bg-slate-900 text-white hover:bg-slate-800"
+            className="p-2 hover:bg-slate-100 rounded-lg"
           >
-            <Menu size={28} />
+            <Menu size={32} className="text-slate-900" />
           </button>
         </div>
       </header>
