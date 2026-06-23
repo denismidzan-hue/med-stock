@@ -70,11 +70,6 @@ export default function AdminPage() {
 
   return (
     <div className="p-4 md:p-8">
-      <PageHeader
-        title="Admin Dashboard"
-        description="Pregled stanja zaloge in aktivnosti"
-      />
-
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow">
           <div className="flex items-center gap-2 md:gap-3 mb-2">
