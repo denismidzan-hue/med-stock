@@ -88,7 +88,7 @@ export default function ScanStockPage() {
   return (
     <div className="p-8 max-w-xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">
-        Dodaj zalogo
+        Dodaj zalogo TEST123
       </h1>
 
       {!medicine ? (
