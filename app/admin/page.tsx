@@ -74,50 +74,50 @@ export default function AdminPage() {
       </h1>
 
       <div className="grid md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-blue-600 text-white rounded-xl p-5 shadow">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <Pill size={32} />
-            <div className="text-sm opacity-80">
+            <Pill size={32} className="text-blue-600" />
+            <div className="text-sm text-slate-500">
               Skupno zdravil
             </div>
           </div>
-          <div className="text-3xl font-bold">
+          <div className="text-3xl font-bold text-slate-900">
             {totalMedicines}
           </div>
         </div>
 
-        <div className="bg-green-600 text-white rounded-xl p-5 shadow">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <Package size={32} />
-            <div className="text-sm opacity-80">
+            <Package size={32} className="text-green-600" />
+            <div className="text-sm text-slate-500">
               Skupna zaloga
             </div>
           </div>
-          <div className="text-3xl font-bold">
+          <div className="text-3xl font-bold text-slate-900">
             {totalStock}
           </div>
         </div>
 
-        <div className="bg-red-600 text-white rounded-xl p-5 shadow">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <AlertTriangle size={32} />
-            <div className="text-sm opacity-80">
+            <AlertTriangle size={32} className="text-red-600" />
+            <div className="text-sm text-slate-500">
               Pod minimumom
             </div>
           </div>
-          <div className="text-3xl font-bold">
+          <div className="text-3xl font-bold text-slate-900">
             {lowStock.length}
           </div>
         </div>
 
-        <div className="bg-yellow-500 text-white rounded-xl p-5 shadow">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow">
           <div className="flex items-center gap-3 mb-2">
-            <CalendarClock size={32} />
-            <div className="text-sm opacity-80">
+            <CalendarClock size={32} className="text-yellow-600" />
+            <div className="text-sm text-slate-500">
               Pred potekom
             </div>
           </div>
-          <div className="text-3xl font-bold">
+          <div className="text-3xl font-bold text-slate-900">
             {expiring.length}
           </div>
         </div>
@@ -126,78 +126,78 @@ export default function AdminPage() {
       <div className="grid md:grid-cols-3 gap-4 mb-8">
         <Link
           href="/admin/add-medicine"
-          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-2xl hover:-translate-y-1 transition duration-300"
+          className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition"
         >
-          <div className="text-3xl mb-2">💊</div>
-          <div className="font-bold text-lg">
+          <div className="text-3xl mb-4">💊</div>
+          <div className="font-semibold text-slate-900">
             Dodaj zdravilo
           </div>
-          <div className="text-sm opacity-90">
+          <div className="text-sm text-slate-500 mt-1">
             Novo zdravilo v bazo
           </div>
         </Link>
 
         <Link
           href="/admin/scan-stock"
-          className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
+          className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition"
         >
-          <div className="text-3xl mb-2">📦</div>
-          <div className="font-bold text-lg">
+          <div className="text-3xl mb-4">📦</div>
+          <div className="font-semibold text-slate-900">
             Dodaj zalogo
           </div>
-          <div className="text-sm opacity-90">
+          <div className="text-sm text-slate-500 mt-1">
             Skeniraj Data Matrix
           </div>
         </Link>
 
         <Link
           href="/admin/inventory"
-          className="bg-gradient-to-r from-purple-500 to-violet-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
+          className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition"
         >
-          <div className="text-3xl mb-2">📋</div>
-          <div className="font-bold text-lg">
+          <div className="text-3xl mb-4">📋</div>
+          <div className="font-semibold text-slate-900">
             Zaloga
           </div>
-          <div className="text-sm opacity-90">
+          <div className="text-sm text-slate-500 mt-1">
             Pregled serij
           </div>
         </Link>
 
         <Link
           href="/admin/transactions"
-          className="bg-gradient-to-r from-orange-500 to-amber-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
+          className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition"
         >
-          <div className="text-3xl mb-2">📊</div>
-          <div className="font-bold text-lg">
+          <div className="text-3xl mb-4">📊</div>
+          <div className="font-semibold text-slate-900">
             Poraba
           </div>
-          <div className="text-sm opacity-90">
+          <div className="text-sm text-slate-500 mt-1">
             Zgodovina porabe
           </div>
         </Link>
 
         <Link
           href="/admin/orders"
-          className="bg-gradient-to-r from-red-500 to-rose-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
+          className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition"
         >
-          <div className="text-3xl mb-2">📝</div>
-          <div className="font-bold text-lg">
+          <div className="text-3xl mb-4">📝</div>
+          <div className="font-semibold text-slate-900">
             Naročilo
           </div>
-          <div className="text-sm opacity-90">
+          <div className="text-sm text-slate-500 mt-1">
             Upravljanje naročil
           </div>
         </Link>
 
         <Link
           href="/admin/stock-summary"
-          className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
+          className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition"
         >
-          <div className="text-3xl mb-2">📈</div>
-          <div className="font-bold text-lg">
+          <div className="text-3xl mb-4">📈</div>
+          <div className="font-semibold text-slate-900">
             Skupna zaloga
           </div>
-          <div className="text-sm opacity-90">
+          <div className="text-sm text-slate-500 mt-1">
             Pregled zaloge
           </div>
         </Link>
