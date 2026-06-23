@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function AdminLayout({
   children,
@@ -9,8 +9,14 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const isActive = (href: string) => pathname === href;
+
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.push("/admin/login");
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row">
@@ -33,7 +39,7 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside className="hidden md:flex flex-col inset-y-0 left-0 w-72 bg-white border-r border-slate-200">
         <div className="border-b border-slate-200">
-          <div className="flex flex-col items-center py-6">
+          <Link href="/admin" className="flex flex-col items-center py-6">
             <img
               src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
               alt="Arbor Mea"
@@ -42,7 +48,7 @@ export default function AdminLayout({
             <p className="mt-4 text-xs uppercase tracking-[0.2em] text-slate-500">
               Evidenca zdravil
             </p>
-          </div>
+          </Link>
         </div>
 
         <nav className="flex-1 p-3 md:p-4 space-y-1 md:space-y-2">
@@ -122,6 +128,13 @@ export default function AdminLayout({
           >
             🛒 Naročilo
           </Link>
+
+          <button
+            onClick={handleLogout}
+            className="block w-full text-left px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium text-red-600 hover:bg-red-50"
+          >
+            🚪 Odjava
+          </button>
         </nav>
       </aside>
 
