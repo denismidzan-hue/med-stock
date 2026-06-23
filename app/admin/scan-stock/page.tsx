@@ -119,10 +119,6 @@ export default function ScanStockPage() {
           {showScanner && (
             <BarcodeScanner
               onScan={(code) => {
-                setTimeout(() => {
-                  setShowScanner(false);
-                }, 500);
-
                 const parsed = parseGS1(code);
 
                 findMedicineByCode(parsed.gtin);
@@ -138,6 +134,10 @@ export default function ScanStockPage() {
 
                   setExpiryDate(`20${yy}-${mm}-${dd}`);
                 }
+
+                setTimeout(() => {
+                  setShowScanner(false);
+                }, 500);
               }}
             />
           )}
