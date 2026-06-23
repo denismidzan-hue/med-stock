@@ -9,6 +9,7 @@ import {
   AlertTriangle,
   CalendarClock
 } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
 
 export default function AdminPage() {
   const [lowStock, setLowStock] = useState<any[]>([]);
@@ -69,9 +70,10 @@ export default function AdminPage() {
 
   return (
     <div className="p-4 md:p-8">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">
-        Admin Dashboard
-      </h1>
+      <PageHeader
+        title="Admin Dashboard"
+        description="Pregled stanja zaloge in aktivnosti"
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow">

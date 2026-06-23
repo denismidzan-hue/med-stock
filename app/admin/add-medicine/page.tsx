@@ -4,6 +4,7 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import BarcodeScanner from "@/components/BarcodeScanner";
 import { parseGS1 } from "@/lib/gs1";
+import PageHeader from "@/components/PageHeader";
 
 export default function AddMedicinePage() {
   const [ean, setEan] = useState("");
@@ -36,61 +37,93 @@ export default function AddMedicinePage() {
 
   return (
     <div className="p-8 max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">
-        Dodaj novo zdravilo
-      </h1>
+      <PageHeader
+        title="Dodaj zdravilo"
+        description="Dodaj novo zdravilo v evidenco"
+      />
 
-      <button
-        onClick={() => setShowScanner(true)}
-        className="bg-green-600 text-white px-4 py-2 rounded mb-4"
-      >
-        📷 Skeniraj EAN
-      </button>
+      <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+        <button
+          onClick={() => setShowScanner(true)}
+          className="w-full h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition mb-6"
+        >
+          📷 Skeniraj EAN / Data Matrix
+        </button>
 
-      {showScanner && (
-        <div className="mb-4">
-          <BarcodeScanner
-            onScan={(code) => {
-              const parsed = parseGS1(code);
+        {showScanner && (
+          <div className="mb-6">
+            <BarcodeScanner
+              onScan={(code) => {
+                const parsed = parseGS1(code);
 
-              setEan(parsed.gtin || code);
+                setEan(parsed.gtin || code);
 
-              setTimeout(() => {
-                setShowScanner(false);
-              }, 500);
-            }}
+                setTimeout(() => {
+                  setShowScanner(false);
+                }, 500);
+              }}
+            />
+          </div>
+        )}
+
+        <div className="mb-5">
+          <label className="block mb-2 text-sm text-slate-600">
+            EAN koda
+          </label>
+          <input
+            value={ean}
+            onChange={(e) => setEan(e.target.value)}
+            placeholder="1234567890123"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-slate-300"
           />
         </div>
-      )}
 
-      <input
-        value={ean}
-        onChange={(e) => setEan(e.target.value)}
-        placeholder="EAN koda"
-        className="border p-2 w-full mb-4"
-      />
+        <div className="mb-5">
+          <label className="block mb-2 text-sm text-slate-600">
+            Naziv zdravila
+          </label>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Aspirin 100 mg"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-slate-300"
+          />
+        </div>
 
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Naziv zdravila"
-        className="border p-2 w-full mb-4"
-      />
+        <div className="mb-8">
+          <label className="block mb-3 text-sm text-slate-600">
+            Minimalna zaloga
+          </label>
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={() =>
+                setMinStock(Math.max(1, minStock - 1))
+              }
+              className="w-12 h-12 rounded-xl border border-slate-200"
+            >
+              −
+            </button>
+            <div className="text-3xl font-bold w-24 text-center">
+              {minStock}
+            </div>
+            <button
+              onClick={() =>
+                setMinStock(minStock + 1)
+              }
+              className="w-12 h-12 rounded-xl border border-slate-200"
+            >
+              +
+            </button>
+          </div>
+        </div>
 
-      <input
-        type="number"
-        value={minStock}
-        onChange={(e) => setMinStock(Number(e.target.value))}
-        placeholder="Minimalna zaloga"
-        className="border p-2 w-full mb-4"
-      />
-
-      <button
-        onClick={saveMedicine}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Shrani zdravilo
-      </button>
+        <button
+          onClick={saveMedicine}
+          className="w-full h-14 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition"
+        >
+          Shrani zdravilo
+        </button>
+      </div>
     </div>
   );
 }

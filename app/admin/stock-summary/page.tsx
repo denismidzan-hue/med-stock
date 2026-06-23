@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import PageHeader from "@/components/PageHeader";
 
 export default function StockSummaryPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -38,10 +39,11 @@ export default function StockSummaryPage() {
   }
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">
-        Skupna zaloga
-      </h1>
+    <div className="p-4 md:p-8">
+      <PageHeader
+        title="Skupna zaloga"
+        description="Pregled skupne zaloge vseh zdravil"
+      />
 
       <table className="w-full border">
         <thead>

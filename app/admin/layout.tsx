@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 export default function AdminLayout({
@@ -10,6 +11,9 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => pathname === href;
 
   return (
     <div className="min-h-screen bg-slate-100 flex">
@@ -33,18 +37,32 @@ export default function AdminLayout({
       <aside className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col transform transition-transform duration-300 shadow-2xl md:shadow-none ${
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}>
-        <div className="p-4 md:p-6 border-b flex items-center justify-between bg-slate-50">
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-slate-900">
-              💊 Evidenca zdravil
-            </h1>
-            <p className="text-xs md:text-sm text-slate-700 mt-1">
-              Administracija
+        <div className="border-b border-slate-200 relative">
+          {/* Mobile */}
+          <div className="flex md:hidden justify-center py-4">
+            <img
+              src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
+              alt="Arbor Mea"
+              className="h-12 w-auto"
+            />
+          </div>
+
+          {/* Desktop */}
+          <div className="hidden md:flex flex-col items-center py-6">
+            <img
+              src="https://arbormea.com/wp-content/themes/arbor/images/logo.svg"
+              alt="Arbor Mea"
+              className="h-16 w-auto"
+            />
+            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-slate-500">
+              Evidenca zdravil
             </p>
           </div>
+
+          {/* Close button */}
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="md:hidden p-2 rounded-lg hover:bg-slate-200 text-slate-900 bg-white border border-slate-300"
+            className="md:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-200 text-slate-900 bg-white border border-slate-300"
           >
             <X size={24} />
           </button>
@@ -53,7 +71,11 @@ export default function AdminLayout({
         <nav className="flex-1 p-3 md:p-4 space-y-1 md:space-y-2">
           <Link
             href="/admin"
-            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base text-slate-900 font-medium"
+            className={`block px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium ${
+              isActive('/admin') 
+                ? 'bg-emerald-50 text-emerald-700' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
             🏠 Pregled
@@ -61,7 +83,11 @@ export default function AdminLayout({
 
           <Link
             href="/admin/add-medicine"
-            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base text-slate-900 font-medium"
+            className={`block px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium ${
+              isActive('/admin/add-medicine') 
+                ? 'bg-emerald-50 text-emerald-700' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
             💊 Zdravila
@@ -69,7 +95,11 @@ export default function AdminLayout({
 
           <Link
             href="/admin/scan-stock"
-            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base text-slate-900 font-medium"
+            className={`block px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium ${
+              isActive('/admin/scan-stock') 
+                ? 'bg-emerald-50 text-emerald-700' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
             📦 Dodaj zalogo
@@ -77,7 +107,11 @@ export default function AdminLayout({
 
           <Link
             href="/admin/inventory"
-            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base text-slate-900 font-medium"
+            className={`block px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium ${
+              isActive('/admin/inventory') 
+                ? 'bg-emerald-50 text-emerald-700' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
             📋 Zaloga
@@ -85,7 +119,11 @@ export default function AdminLayout({
 
           <Link
             href="/admin/stock-summary"
-            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base text-slate-900 font-medium"
+            className={`block px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium ${
+              isActive('/admin/stock-summary') 
+                ? 'bg-emerald-50 text-emerald-700' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
             📊 Skupna zaloga
@@ -93,7 +131,11 @@ export default function AdminLayout({
 
           <Link
             href="/admin/transactions"
-            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base text-slate-900 font-medium"
+            className={`block px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium ${
+              isActive('/admin/transactions') 
+                ? 'bg-emerald-50 text-emerald-700' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
             📈 Poraba
@@ -101,7 +143,11 @@ export default function AdminLayout({
 
           <Link
             href="/admin/orders"
-            className="block px-3 md:px-4 py-3 md:py-3 rounded-xl hover:bg-slate-100 transition text-sm md:text-base text-slate-900 font-medium"
+            className={`block px-3 md:px-4 py-3 md:py-3 rounded-xl transition text-sm md:text-base font-medium ${
+              isActive('/admin/orders') 
+                ? 'bg-emerald-50 text-emerald-700' 
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
             onClick={() => setMobileMenuOpen(false)}
           >
             🛒 Naročilo

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import BarcodeScanner from "@/components/BarcodeScanner";
 import { parseGS1 } from "@/lib/gs1";
+import PageHeader from "@/components/PageHeader";
 
 export default function ScanStockPage() {
   const [ean, setEan] = useState("");
@@ -74,9 +75,10 @@ export default function ScanStockPage() {
 
   return (
     <div className="p-8 max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">
-        Dodaj zalogo
-      </h1>
+      <PageHeader
+        title="Dodaj zalogo"
+        description="Skeniraj zdravilo in dodaj zalogo"
+      />
 
       {!medicine ? (
         <>
@@ -84,20 +86,20 @@ export default function ScanStockPage() {
             value={ean}
             onChange={(e) => setEan(e.target.value)}
             placeholder="EAN"
-            className="border p-2 w-full mb-4"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-slate-300 mb-6"
           />
 
-          <div className="flex gap-2 mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-6">
             <button
               onClick={findMedicine}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="h-14 rounded-2xl border border-slate-200 bg-white font-medium hover:bg-slate-50 transition"
             >
               Poišči zdravilo
             </button>
 
             <button
               onClick={() => setShowScanner(true)}
-              className="bg-green-600 text-white px-4 py-2 rounded"
+              className="h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
             >
               📷 Skeniraj
             </button>
@@ -131,38 +133,62 @@ export default function ScanStockPage() {
         </>
       ) : (
         <>
-          <h2 className="text-xl font-semibold mb-4">
-            {medicine.name}
-          </h2>
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 mb-6 shadow-sm">
+            <div className="text-sm text-slate-500">
+              Najdeno zdravilo
+            </div>
+            <div className="text-3xl font-bold mt-2">
+              💊 {medicine.name}
+            </div>
+          </div>
 
-          <input
-            value={batchNumber}
-            onChange={(e) => setBatchNumber(e.target.value)}
-            placeholder="Serija"
-            className="border p-2 w-full mb-4"
-            readOnly
-          />
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+              <div className="text-xs uppercase text-slate-500 mb-1">
+                Serija
+              </div>
+              <div className="font-semibold text-lg">
+                {batchNumber}
+              </div>
+            </div>
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+              <div className="text-xs uppercase text-slate-500 mb-1">
+                Rok uporabe
+              </div>
+              <div className="font-semibold text-lg">
+                {expiryDate ? new Date(expiryDate).toLocaleDateString("sl-SI") : "-"}
+              </div>
+            </div>
+          </div>
 
-          <input
-            type="date"
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
-            className="border p-2 w-full mb-4"
-            readOnly
-          />
-
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) =>
-              setQuantity(Number(e.target.value))
-            }
-            className="border p-2 w-full mb-4"
-          />
+          <div className="mb-6">
+            <label className="block mb-3 font-medium">
+              Količina
+            </label>
+            <div className="flex items-center justify-center gap-4">
+              <button
+                onClick={() =>
+                  setQuantity(Math.max(1, quantity - 1))
+                }
+                className="w-12 h-12 rounded-xl border border-slate-200 hover:bg-slate-50"
+              >
+                −
+              </button>
+              <div className="text-3xl font-bold w-20 text-center">
+                {quantity}
+              </div>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="w-12 h-12 rounded-xl border border-slate-200 hover:bg-slate-50"
+              >
+                +
+              </button>
+            </div>
+          </div>
 
           <button
             onClick={saveBatch}
-            className="bg-green-600 text-white px-4 py-2 rounded"
+            className="w-full h-14 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition"
           >
             Shrani zalogo
           </button>
