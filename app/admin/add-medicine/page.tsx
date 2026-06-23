@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import BarcodeScanner from "@/components/BarcodeScanner";
+import { parseGS1 } from "@/lib/gs1";
 
 export default function AddMedicinePage() {
   const [ean, setEan] = useState("");
@@ -50,7 +51,9 @@ export default function AddMedicinePage() {
         <div className="mb-4">
           <BarcodeScanner
             onScan={(code) => {
-              setEan(code);
+              const parsed = parseGS1(code);
+
+              setEan(parsed.gtin || code);
 
               setTimeout(() => {
                 setShowScanner(false);
