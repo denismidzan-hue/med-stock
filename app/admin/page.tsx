@@ -126,7 +126,7 @@ export default function AdminPage() {
       <div className="grid md:grid-cols-3 gap-4 mb-8">
         <Link
           href="/admin/add-medicine"
-          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition"
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-2xl hover:-translate-y-1 transition duration-300"
         >
           <div className="text-3xl mb-2">💊</div>
           <div className="font-bold text-lg">
