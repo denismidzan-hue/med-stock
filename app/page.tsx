@@ -86,9 +86,9 @@ export default function Home() {
           </div>
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="p-2 rounded-lg hover:bg-slate-100"
+            className="p-3 rounded-lg bg-slate-900 text-white hover:bg-slate-800"
           >
-            <Menu size={24} />
+            <Menu size={28} />
           </button>
         </div>
       </header>
@@ -113,35 +113,35 @@ export default function Home() {
           <nav className="mt-8 space-y-4">
             <Link
               href="/admin/scan-stock"
-              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium"
+              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium text-slate-900"
               onClick={() => setMobileMenuOpen(false)}
             >
               � Dodaj zalogo
             </Link>
             <Link
               href="/admin/add-medicine"
-              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium"
+              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium text-slate-900"
               onClick={() => setMobileMenuOpen(false)}
             >
               � Dodaj zdravilo
             </Link>
             <Link
               href="/admin/inventory"
-              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium"
+              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium text-slate-900"
               onClick={() => setMobileMenuOpen(false)}
             >
               � Zaloga
             </Link>
             <Link
               href="/admin/transactions"
-              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium"
+              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium text-slate-900"
               onClick={() => setMobileMenuOpen(false)}
             >
               � Poraba
             </Link>
             <Link
               href="/admin/orders"
-              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium"
+              className="block py-3 px-4 rounded-xl hover:bg-slate-100 font-medium text-slate-900"
               onClick={() => setMobileMenuOpen(false)}
             >
               � Naročilo
