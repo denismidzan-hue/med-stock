@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import {
+  Pill,
+  Package,
+  AlertTriangle,
+  CalendarClock
+} from "lucide-react";
 
 export default function AdminPage() {
   const [lowStock, setLowStock] = useState<any[]>([]);
@@ -69,8 +75,11 @@ export default function AdminPage() {
 
       <div className="grid md:grid-cols-4 gap-4 mb-8">
         <div className="bg-blue-600 text-white rounded-xl p-5 shadow">
-          <div className="text-sm opacity-80">
-            Skupno zdravil
+          <div className="flex items-center gap-3 mb-2">
+            <Pill size={32} />
+            <div className="text-sm opacity-80">
+              Skupno zdravil
+            </div>
           </div>
           <div className="text-3xl font-bold">
             {totalMedicines}
@@ -78,8 +87,11 @@ export default function AdminPage() {
         </div>
 
         <div className="bg-green-600 text-white rounded-xl p-5 shadow">
-          <div className="text-sm opacity-80">
-            Skupna zaloga
+          <div className="flex items-center gap-3 mb-2">
+            <Package size={32} />
+            <div className="text-sm opacity-80">
+              Skupna zaloga
+            </div>
           </div>
           <div className="text-3xl font-bold">
             {totalStock}
@@ -87,8 +99,11 @@ export default function AdminPage() {
         </div>
 
         <div className="bg-red-600 text-white rounded-xl p-5 shadow">
-          <div className="text-sm opacity-80">
-            Pod minimumom
+          <div className="flex items-center gap-3 mb-2">
+            <AlertTriangle size={32} />
+            <div className="text-sm opacity-80">
+              Pod minimumom
+            </div>
           </div>
           <div className="text-3xl font-bold">
             {lowStock.length}
@@ -96,8 +111,11 @@ export default function AdminPage() {
         </div>
 
         <div className="bg-yellow-500 text-white rounded-xl p-5 shadow">
-          <div className="text-sm opacity-80">
-            Pred potekom
+          <div className="flex items-center gap-3 mb-2">
+            <CalendarClock size={32} />
+            <div className="text-sm opacity-80">
+              Pred potekom
+            </div>
           </div>
           <div className="text-3xl font-bold">
             {expiring.length}
