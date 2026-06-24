@@ -52,19 +52,24 @@ export default function ScanStockPage() {
   }
 
   async function findMedicineByCode(code: string) {
-    const { data } = await supabase
-      .from("medicines")
-      .select("*")
-      .eq("ean", code)
-      .single();
+    try {
+      const { data } = await supabase
+        .from("medicines")
+        .select("*")
+        .eq("ean", code)
+        .single();
 
-    if (!data) {
-      alert("Zdravilo ni najdeno");
-      return;
+      if (!data) {
+        alert("Zdravilo ni najdeno");
+        return;
+      }
+
+      setEan(code);
+      setMedicine(data);
+    } catch (error) {
+      console.error("Find medicine error:", error);
+      alert("Napaka pri iskanju zdravila");
     }
-
-    setEan(code);
-    setMedicine(data);
   }
 
   async function saveBatch() {
@@ -123,25 +128,33 @@ export default function ScanStockPage() {
             <div className="mb-6">
               <BarcodeScanner
                 onScan={(code) => {
-                  const parsed = parseGS1(code);
+                  try {
+                    const parsed = parseGS1(code);
 
-                  findMedicineByCode(parsed.gtin);
+                    if (parsed.gtin) {
+                      findMedicineByCode(parsed.gtin);
+                    }
 
-                  if (parsed.lot) {
-                    setBatchNumber(parsed.lot);
-                  }
+                    if (parsed.lot) {
+                      setBatchNumber(parsed.lot);
+                    }
 
-                  if (parsed.expiry.length === 6) {
-                    const yy = parsed.expiry.slice(0, 2);
-                    const mm = parsed.expiry.slice(2, 4);
-                    const dd = parsed.expiry.slice(4, 6);
+                    if (parsed.expiry && parsed.expiry.length === 6) {
+                      const yy = parsed.expiry.slice(0, 2);
+                      const mm = parsed.expiry.slice(2, 4);
+                      const dd = parsed.expiry.slice(4, 6);
 
-                    setExpiryDate(`20${yy}-${mm}-${dd}`);
-                  }
+                      setExpiryDate(`20${yy}-${mm}-${dd}`);
+                    }
 
-                  setTimeout(() => {
+                    setTimeout(() => {
+                      setShowScanner(false);
+                    }, 500);
+                  } catch (error) {
+                    console.error("Scan error:", error);
+                    alert("Napaka pri skeniranju");
                     setShowScanner(false);
-                  }, 500);
+                  }
                 }}
               />
             </div>
