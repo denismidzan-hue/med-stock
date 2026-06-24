@@ -15,13 +15,17 @@ export default function BarcodeScanner({
     // Check if mobile device
     const isMobile = window.innerWidth < 768;
 
+    alert("Mobile: " + isMobile + ", Starting scanner...");
+
+    const config = {
+      fps: 10,
+      qrbox: isMobile ? { width: 250, height: 250 } : 250,
+    };
+
     scanner
       .start(
         { facingMode: "environment" },
-        {
-          fps: 10,
-          qrbox: isMobile ? { width: 300, height: 300 } : 250,
-        },
+        config,
         async (decodedText) => {
           if (scanned) return;
 
@@ -35,9 +39,14 @@ export default function BarcodeScanner({
 
           onScan(decodedText);
         },
-        () => {}
+        (errorMessage) => {
+          console.log("Scanner error:", errorMessage);
+        }
       )
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Scanner start error:", error);
+        alert("Scanner error: " + error.message);
+      });
 
     return () => {
       if (!scanned) {
