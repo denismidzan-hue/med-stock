@@ -52,7 +52,7 @@ export default function AddMedicinePage() {
           📷 Skeniraj EAN / Data Matrix
         </button>
 
-        {!showScanner && (
+        {!(showScanner || showScannedEntry) && (
           <button
             onClick={() => setShowManualEntry(!showManualEntry)}
             className="w-full h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition mb-6"
@@ -200,7 +200,7 @@ export default function AddMedicinePage() {
           </div>
         )}
 
-        {showScanner && (
+        {(showScanner || showScannedEntry) && (
           <button
             onClick={() => setShowManualEntry(!showManualEntry)}
             className="w-full h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition"
