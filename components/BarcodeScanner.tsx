@@ -1,6 +1,9 @@
 "use client";
 
-import { Html5Qrcode } from "html5-qrcode";
+import {
+  Html5Qrcode,
+  Html5QrcodeSupportedFormats,
+} from "html5-qrcode";
 import { useEffect } from "react";
 
 export default function BarcodeScanner({
@@ -18,6 +21,13 @@ export default function BarcodeScanner({
         {
           fps: 10,
           qrbox: 250,
+          // @ts-ignore - formatsToSupport is supported in runtime but not in TS definitions
+          formatsToSupport: [
+            Html5QrcodeSupportedFormats.DATA_MATRIX,
+            Html5QrcodeSupportedFormats.EAN_13,
+            Html5QrcodeSupportedFormats.QR_CODE,
+            Html5QrcodeSupportedFormats.CODE_128,
+          ],
         },
         async (decodedText) => {
           if (scanned) return;
