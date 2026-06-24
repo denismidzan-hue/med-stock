@@ -15,8 +15,6 @@ export default function BarcodeScanner({
     // Check if mobile device
     const isMobile = window.innerWidth < 768;
 
-    alert("Mobile: " + isMobile + ", Starting scanner...");
-
     const config = {
       fps: 10,
       qrbox: isMobile ? { width: 250, height: 250 } : 250,
@@ -31,8 +29,6 @@ export default function BarcodeScanner({
 
           scanned = true;
 
-          alert("Skenirano: " + decodedText);
-
           try {
             await scanner.stop();
           } catch {}
@@ -45,7 +41,6 @@ export default function BarcodeScanner({
       )
       .catch((error) => {
         console.error("Scanner start error:", error);
-        alert("Scanner error: " + error.message);
       });
 
     return () => {
