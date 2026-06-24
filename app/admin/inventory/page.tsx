@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import React from "react";
 import { supabase } from "@/lib/supabase";
 import { ArrowUp, ArrowDown } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
@@ -16,6 +17,7 @@ export default function InventoryPage() {
   const [sortBy, setSortBy] = useState("expiry");
   const [sortDirection, setSortDirection] =
     useState<"asc" | "desc">("asc");
+  const [expandedMedicines, setExpandedMedicines] = useState<Set<string>>(new Set());
 
   async function loadInventory() {
     const { data: batchesData, error } = await supabase
@@ -39,6 +41,16 @@ export default function InventoryPage() {
   useEffect(() => {
     loadInventory();
   }, []);
+
+  function toggleMedicine(medicineId: string) {
+    const newExpanded = new Set(expandedMedicines);
+    if (newExpanded.has(medicineId)) {
+      newExpanded.delete(medicineId);
+    } else {
+      newExpanded.add(medicineId);
+    }
+    setExpandedMedicines(newExpanded);
+  }
 
   function getMedicineImage(medicineId: string) {
     const medicine = medicines.find(m => m.id === medicineId);
@@ -277,113 +289,153 @@ export default function InventoryPage() {
           </thead>
 
           <tbody>
-            {batches
-              .filter((batch) => {
-                const medicineName =
-                  batch.medicine_name?.toLowerCase() || "";
-
-                const batchNumber =
-                  batch.batch_number?.toLowerCase() || "";
-
-                const query = search.toLowerCase();
-
-                const matchesSearch =
-                  medicineName.includes(query) ||
-                  batchNumber.includes(query);
-
-                if (!matchesSearch) return false;
-
-                if (!showExpiringOnly) return true;
-
-                const expiry = new Date(batch.expiry_date);
-                const today = new Date();
-
-                const diff =
-                  (expiry.getTime() - today.getTime()) /
-                  (1000 * 60 * 60 * 24);
-
-                return diff < 90;
-              })
-              .sort((a, b) => {
-                if (sortBy === "quantity") {
-                  return sortDirection === "asc"
-                    ? a.quantity - b.quantity
-                    : b.quantity - a.quantity;
+            {(() => {
+              // Group batches by medicine_id
+              const groupedBatches = batches.reduce((acc: Record<string, any[]>, batch: any) => {
+                if (!acc[batch.medicine_id]) {
+                  acc[batch.medicine_id] = [];
                 }
+                acc[batch.medicine_id].push(batch);
+                return acc;
+              }, {} as Record<string, any[]>);
 
-                if (sortBy === "expiry") {
-                  return sortDirection === "asc"
-                    ? new Date(a.expiry_date).getTime() -
-                        new Date(b.expiry_date).getTime()
-                    : new Date(b.expiry_date).getTime() -
-                        new Date(a.expiry_date).getTime();
-                }
+              // Convert to array and filter/sort
+              const groupedArray = Object.entries(groupedBatches)
+                .filter(([medicineId, batchList]: [string, any[]]) => {
+                  const medicineName = batchList[0]?.medicine_name?.toLowerCase() || "";
+                  const query = search.toLowerCase();
+                  const matchesSearch = medicineName.includes(query);
+                  if (!matchesSearch) return false;
 
-                return 0;
-              })
-              .map((batch) => (
-              <tr
-                key={batch.id}
-                className="border-b hover:bg-slate-50 transition"
-              >
-                <td className="p-4">
-                  <div className="flex items-center gap-4">
-                    {getMedicineImage(batch.medicine_id) ? (
-                      <img
-                        src={getMedicineImage(batch.medicine_id)}
-                        className="w-14 h-14 rounded-xl object-cover border"
-                        alt={batch.medicine_name}
-                      />
-                    ) : (
-                      <div className="w-14 h-14 rounded-xl bg-slate-100 flex items-center justify-center">
-                        💊
-                      </div>
-                    )}
-                    <div>
-                      <div className="font-semibold text-slate-900">
-                        {batch.medicine_name}
-                      </div>
-                      <div className="text-sm text-slate-500">
-                        Serija {batch.batch_number}
-                      </div>
-                    </div>
-                  </div>
-                </td>
+                  if (!showExpiringOnly) return true;
 
-                <td className="p-4">
-                  {batch.batch_number}
-                </td>
+                  return batchList.some((batch: any) => {
+                    const expiry = new Date(batch.expiry_date);
+                    const today = new Date();
+                    const diff = (expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+                    return diff < 90;
+                  });
+                })
+                .sort(([, a]: [string, any[]], [, b]: [string, any[]]) => {
+                  const totalA = a.reduce((sum: number, batch: any) => sum + batch.quantity, 0);
+                  const totalB = b.reduce((sum: number, batch: any) => sum + batch.quantity, 0);
+                  return sortDirection === "asc" ? totalA - totalB : totalB - totalA;
+                });
 
-                <td className="p-4 font-medium">
-                  {batch.quantity}
-                </td>
+              return groupedArray.map(([medicineId, batchList]: [string, any[]]) => {
+                const isExpanded = expandedMedicines.has(medicineId);
+                const totalQuantity = batchList.reduce((sum: number, batch: any) => sum + batch.quantity, 0);
+                const earliestExpiry = batchList.reduce((earliest: Date | null, batch: any) => {
+                  const expiry = new Date(batch.expiry_date);
+                  return !earliest || expiry < earliest ? expiry : earliest;
+                }, null as Date | null);
 
-                <td className="p-4">
-                  {new Date(batch.expiry_date).toLocaleDateString("sl-SI")}
-                </td>
-
-                <td className="p-4">
-                  {getStatusBadge(batch.expiry_date)}
-                </td>
-
-                <td className="p-4">
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => editBatch(batch)}
-                      className="text-slate-500 hover:text-slate-900"
+                return (
+                  <React.Fragment key={medicineId}>
+                    <tr
+                      onClick={() => toggleMedicine(medicineId)}
+                      className="border-b hover:bg-slate-50 transition cursor-pointer"
                     >
-                      ✏️
-                    </button>
-                    <button
-                      onClick={() => deleteBatch(batch.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                      <td className="p-4">
+                        <div className="flex items-center gap-4">
+                          {getMedicineImage(medicineId) ? (
+                            <img
+                              src={getMedicineImage(medicineId)}
+                              className="w-14 h-14 rounded-xl object-cover border"
+                              alt={batchList[0].medicine_name}
+                            />
+                          ) : (
+                            <div className="w-14 h-14 rounded-xl bg-slate-100 flex items-center justify-center">
+                              💊
+                            </div>
+                          )}
+                          <div>
+                            <div className="font-semibold text-slate-900">
+                              {batchList[0].medicine_name}
+                            </div>
+                            <div className="text-sm text-slate-500">
+                              {batchList.length} serij
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="p-4">
+                        -
+                      </td>
+
+                      <td className="p-4 font-medium">
+                        {totalQuantity}
+                      </td>
+
+                      <td className="p-4">
+                        {earliestExpiry ? earliestExpiry.toLocaleDateString("sl-SI") : "-"}
+                      </td>
+
+                      <td className="p-4">
+                        {earliestExpiry ? getStatusBadge(earliestExpiry.toISOString()) : "-"}
+                      </td>
+
+                      <td className="p-4">
+                        {isExpanded ? "▼" : "▶"}
+                      </td>
+                    </tr>
+
+                    {isExpanded && batchList.map((batch: any) => (
+                      <tr
+                        key={batch.id}
+                        className="border-b bg-slate-50 hover:bg-slate-100 transition"
+                      >
+                        <td className="p-4 pl-12">
+                          <div className="text-sm text-slate-600">
+                            Serija {batch.batch_number}
+                          </div>
+                        </td>
+
+                        <td className="p-4">
+                          {batch.batch_number}
+                        </td>
+
+                        <td className="p-4 font-medium">
+                          {batch.quantity}
+                        </td>
+
+                        <td className="p-4">
+                          {new Date(batch.expiry_date).toLocaleDateString("sl-SI")}
+                        </td>
+
+                        <td className="p-4">
+                          {getStatusBadge(batch.expiry_date)}
+                        </td>
+
+                        <td className="p-4">
+                          <div className="flex gap-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                editBatch(batch);
+                              }}
+                              className="text-slate-500 hover:text-slate-900"
+                            >
+                              ✏️
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteBatch(batch.id);
+                              }}
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                );
+              });
+            })()}
           </tbody>
         </table>
       </div>
