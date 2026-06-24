@@ -65,8 +65,8 @@ export default function AddMedicinePage() {
                 const parsed = parseGS1(code);
 
                 setEan(parsed.gtin || code);
-
                 setShowScanner(false);
+                setShowManualEntry(true);
               }}
             />
           </div>
