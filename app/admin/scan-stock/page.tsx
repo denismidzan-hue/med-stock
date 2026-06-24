@@ -152,18 +152,16 @@ export default function ScanStockPage() {
           {showScanner && (
             <div className="mb-6">
               <BarcodeScanner
-                onScan={(code) => {
+                onScan={async (code) => {
                   console.log("Scanned code:", code);
                   try {
                     const parsed = parseGS1(code);
                     console.log("Parsed data:", parsed);
 
-                    if (parsed && parsed.gtin) {
-                      findMedicineByCode(parsed.gtin);
-                    } else {
-                      // If no GTIN, use the raw code
-                      findMedicineByCode(code);
-                    }
+                    const eanToUse = (parsed && parsed.gtin) ? parsed.gtin : code;
+                    console.log("Using EAN:", eanToUse);
+
+                    await findMedicineByCode(eanToUse);
 
                     if (parsed && parsed.lot) {
                       setBatchNumber(parsed.lot);
