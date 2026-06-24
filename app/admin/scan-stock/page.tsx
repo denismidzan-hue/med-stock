@@ -73,24 +73,49 @@ export default function ScanStockPage() {
   }
 
   async function saveBatch() {
-    const { error } = await supabase
+    // Check if batch with same medicine, batch number and expiry already exists
+    const { data: existingBatch } = await supabase
       .from("batches")
-      .insert([
-        {
-          medicine_id: medicine.id,
-          medicine_name: medicine.name,
-          batch_number: batchNumber,
-          expiry_date: expiryDate,
-          quantity: quantity,
-        },
-      ]);
+      .select("*")
+      .eq("medicine_id", medicine.id)
+      .eq("batch_number", batchNumber)
+      .eq("expiry_date", expiryDate)
+      .single();
+
+    let error;
+
+    if (existingBatch) {
+      // Update existing batch quantity
+      const newQuantity = existingBatch.quantity + quantity;
+      const { error: updateError } = await supabase
+        .from("batches")
+        .update({ quantity: newQuantity })
+        .eq("id", existingBatch.id);
+
+      error = updateError;
+    } else {
+      // Insert new batch
+      const { error: insertError } = await supabase
+        .from("batches")
+        .insert([
+          {
+            medicine_id: medicine.id,
+            medicine_name: medicine.name,
+            batch_number: batchNumber,
+            expiry_date: expiryDate,
+            quantity: quantity,
+          },
+        ]);
+
+      error = insertError;
+    }
 
     if (error) {
       alert(error.message);
       return;
     }
 
-    alert("Zaloga dodana");
+    alert(existingBatch ? "Količina posodobljena" : "Zaloga dodana");
 
     setMedicine(null);
     setEan("");

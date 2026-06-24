@@ -361,7 +361,7 @@ export default function InventoryPage() {
                       </td>
 
                       <td className="p-4">
-                        -
+                        {isExpanded ? "▼" : "-"}
                       </td>
 
                       <td className="p-4 font-medium">
@@ -388,7 +388,7 @@ export default function InventoryPage() {
                       >
                         <td className="p-4 pl-12">
                           <div className="text-sm text-slate-600">
-                            Serija {batch.batch_number}
+                            {batch.medicine_name} {batch.batch_number}
                           </div>
                         </td>
 
