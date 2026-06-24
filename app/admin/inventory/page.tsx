@@ -369,11 +369,11 @@ export default function InventoryPage() {
                       </td>
 
                       <td className="p-4">
-                        {earliestExpiry ? earliestExpiry.toLocaleDateString("sl-SI") : "-"}
+                        {isExpanded ? "▼" : (earliestExpiry ? earliestExpiry.toLocaleDateString("sl-SI") : "-")}
                       </td>
 
                       <td className="p-4">
-                        {earliestExpiry ? getStatusBadge(earliestExpiry.toISOString()) : "-"}
+                        {isExpanded ? "" : (earliestExpiry ? getStatusBadge(earliestExpiry.toISOString()) : "-")}
                       </td>
 
                       <td className="p-4">
