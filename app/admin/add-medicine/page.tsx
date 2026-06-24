@@ -52,12 +52,14 @@ export default function AddMedicinePage() {
           📷 Skeniraj EAN / Data Matrix
         </button>
 
-        <button
-          onClick={() => setShowManualEntry(!showManualEntry)}
-          className="w-full h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition mb-6"
-        >
-          Vnesi ročno
-        </button>
+        {!showScanner && (
+          <button
+            onClick={() => setShowManualEntry(!showManualEntry)}
+            className="w-full h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition mb-6"
+          >
+            Vnesi ročno
+          </button>
+        )}
 
         {showScanner && (
           <div className="mb-6">
@@ -196,6 +198,15 @@ export default function AddMedicinePage() {
               Shrani zdravilo
             </button>
           </div>
+        )}
+
+        {showScanner && (
+          <button
+            onClick={() => setShowManualEntry(!showManualEntry)}
+            className="w-full h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition"
+          >
+            Vnesi ročno
+          </button>
         )}
       </div>
     </div>
