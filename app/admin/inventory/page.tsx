@@ -395,7 +395,7 @@ export default function InventoryPage() {
                         return acc;
                       }, {});
 
-                      // Sort grouped batches by expiry date if sortBy is "expiry"
+                      // Sort grouped batches by expiry date or quantity
                       const sortedGroupedBatches = Object.entries(groupedByBatch);
                       if (sortBy === "expiry") {
                         sortedGroupedBatches.sort(([, a], [, b]) => {
@@ -404,6 +404,12 @@ export default function InventoryPage() {
                           return sortDirection === "asc"
                             ? expiryA.getTime() - expiryB.getTime()
                             : expiryB.getTime() - expiryA.getTime();
+                        });
+                      } else if (sortBy === "quantity") {
+                        sortedGroupedBatches.sort(([, a], [, b]) => {
+                          const quantityA = a.reduce((sum: number, batch: any) => sum + batch.quantity, 0);
+                          const quantityB = b.reduce((sum: number, batch: any) => sum + batch.quantity, 0);
+                          return sortDirection === "asc" ? quantityA - quantityB : quantityB - quantityA;
                         });
                       }
 
