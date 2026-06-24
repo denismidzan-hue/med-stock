@@ -128,18 +128,23 @@ export default function ScanStockPage() {
             <div className="mb-6">
               <BarcodeScanner
                 onScan={(code) => {
+                  console.log("Scanned code:", code);
                   try {
                     const parsed = parseGS1(code);
+                    console.log("Parsed data:", parsed);
 
-                    if (parsed.gtin) {
+                    if (parsed && parsed.gtin) {
                       findMedicineByCode(parsed.gtin);
+                    } else {
+                      // If no GTIN, use the raw code
+                      findMedicineByCode(code);
                     }
 
-                    if (parsed.lot) {
+                    if (parsed && parsed.lot) {
                       setBatchNumber(parsed.lot);
                     }
 
-                    if (parsed.expiry && parsed.expiry.length === 6) {
+                    if (parsed && parsed.expiry && parsed.expiry.length === 6) {
                       const yy = parsed.expiry.slice(0, 2);
                       const mm = parsed.expiry.slice(2, 4);
                       const dd = parsed.expiry.slice(4, 6);
@@ -152,7 +157,7 @@ export default function ScanStockPage() {
                     }, 500);
                   } catch (error) {
                     console.error("Scan error:", error);
-                    alert("Napaka pri skeniranju");
+                    alert("Napaka pri skeniranju: " + (error as Error).message);
                     setShowScanner(false);
                   }
                 }}
