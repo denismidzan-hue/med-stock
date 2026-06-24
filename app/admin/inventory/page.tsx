@@ -395,7 +395,19 @@ export default function InventoryPage() {
                         return acc;
                       }, {});
 
-                      return Object.entries(groupedByBatch).map(([key, batches]: [string, any[]]) => {
+                      // Sort grouped batches by expiry date if sortBy is "expiry"
+                      const sortedGroupedBatches = Object.entries(groupedByBatch);
+                      if (sortBy === "expiry") {
+                        sortedGroupedBatches.sort(([, a], [, b]) => {
+                          const expiryA = new Date(a[0].expiry_date);
+                          const expiryB = new Date(b[0].expiry_date);
+                          return sortDirection === "asc"
+                            ? expiryA.getTime() - expiryB.getTime()
+                            : expiryB.getTime() - expiryA.getTime();
+                        });
+                      }
+
+                      return sortedGroupedBatches.map(([key, batches]: [string, any[]]) => {
                         const totalQuantity = batches.reduce((sum: number, b: any) => sum + b.quantity, 0);
                         const firstBatch = batches[0];
 
