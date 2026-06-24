@@ -92,7 +92,7 @@ export default function ScanStockPage() {
           <div className="grid grid-cols-2 gap-3 mb-6">
             <button
               onClick={findMedicine}
-              className="h-14 rounded-2xl border border-slate-200 bg-white font-medium hover:bg-slate-50 transition"
+              className="h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition"
             >
               Poišči zdravilo
             </button>
