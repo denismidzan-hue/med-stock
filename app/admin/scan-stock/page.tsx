@@ -102,6 +102,15 @@ export default function ScanStockPage() {
 
       {!medicine ? (
         <>
+          <div className="md:hidden mb-4">
+            <button
+              onClick={() => setShowScanner(true)}
+              className="w-full h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
+            >
+              📷 Skeniraj
+            </button>
+          </div>
+
           <input
             value={ean}
             onChange={(e) => setEan(e.target.value)}
@@ -126,7 +135,7 @@ export default function ScanStockPage() {
 
             <button
               onClick={() => setShowScanner(true)}
-              className="h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
+              className="hidden md:block h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
             >
               📷 Skeniraj
             </button>
