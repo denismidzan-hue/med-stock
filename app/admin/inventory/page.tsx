@@ -167,7 +167,7 @@ export default function InventoryPage() {
           placeholder="Išči zdravilo..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-md rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full max-w-md rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500"
         />
       </div>
 
