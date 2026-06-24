@@ -372,7 +372,7 @@ export default function InventoryPage() {
                       </td>
 
                       <td className="p-4">
-                        {isExpanded ? "▼" : (earliestExpiry ? earliestExpiry.toLocaleDateString("sl-SI") : "-")}
+                        {earliestExpiry ? earliestExpiry.toLocaleDateString("sl-SI") : "-"}
                       </td>
 
                       <td className="p-4">
@@ -380,7 +380,7 @@ export default function InventoryPage() {
                       </td>
 
                       <td className="p-4">
-                        {isExpanded ? "▼" : "▶"}
+                        {isExpanded ? "" : "▶"}
                       </td>
                     </tr>
 
