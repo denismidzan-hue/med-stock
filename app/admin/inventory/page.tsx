@@ -236,7 +236,7 @@ export default function InventoryPage() {
       )}
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto md:overflow-visible">
           <table className="min-w-[900px] w-full table-fixed">
           <thead className="bg-slate-50">
             <tr>
