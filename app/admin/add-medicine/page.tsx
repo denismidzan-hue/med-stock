@@ -72,7 +72,7 @@ export default function AddMedicinePage() {
             value={ean}
             onChange={(e) => setEan(e.target.value)}
             placeholder="1234567890123"
-            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-50 outline-none focus:ring-2 focus:ring-slate-300 [-webkit-text-fill-color:#0f172a]"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-slate-300 [-webkit-text-fill-color:#0f172a]"
           />
         </div>
 
@@ -84,7 +84,7 @@ export default function AddMedicinePage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Aspirin 100 mg"
-            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-50 outline-none focus:ring-2 focus:ring-slate-300 [-webkit-text-fill-color:#0f172a]"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-slate-300 [-webkit-text-fill-color:#0f172a]"
           />
         </div>
 
