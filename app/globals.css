@@ -47,15 +47,15 @@ td {
 @media (min-width: 769px) {
   input::placeholder {
     color: #cbd5e1 !important;
-    opacity: 0.7 !important;
+    opacity: 0.8 !important;
   }
   input::-webkit-input-placeholder {
     color: #cbd5e1 !important;
-    opacity: 0.7 !important;
+    opacity: 0.8 !important;
   }
   input::-moz-placeholder {
     color: #cbd5e1 !important;
-    opacity: 0.7 !important;
+    opacity: 0.8 !important;
   }
 }
 
@@ -63,14 +63,14 @@ td {
 @media (max-width: 768px) {
   input::placeholder {
     color: #cbd5e1 !important;
-    opacity: 0.6 !important;
+    opacity: 0.7 !important;
   }
   input::-webkit-input-placeholder {
     color: #cbd5e1 !important;
-    opacity: 0.6 !important;
+    opacity: 0.7 !important;
   }
   input::-moz-placeholder {
     color: #cbd5e1 !important;
-    opacity: 0.6 !important;
+    opacity: 0.7 !important;
   }
 }
