@@ -8,21 +8,21 @@ import PageHeader from "@/components/PageHeader";
 
 export default function ScanStockPage() {
   const [ean, setEan] = useState("");
+  const [name, setName] = useState("");
   const [medicine, setMedicine] = useState<any>(null);
 
   const [quantity, setQuantity] = useState(1);
   const [batchNumber, setBatchNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [showScanner, setShowScanner] = useState(false);
-  const [searchByName, setSearchByName] = useState(false);
 
   async function findMedicine() {
     let data;
-    if (searchByName) {
+    if (name) {
       const { data: nameData } = await supabase
         .from("medicines")
         .select("*")
-        .ilike("name", `%${ean}%`)
+        .ilike("name", `%${name}%`)
         .limit(1);
 
       if (!nameData || nameData.length === 0) {
@@ -30,7 +30,7 @@ export default function ScanStockPage() {
         return;
       }
       data = nameData[0];
-    } else {
+    } else if (ean) {
       const { data: eanData } = await supabase
         .from("medicines")
         .select("*")
@@ -42,6 +42,9 @@ export default function ScanStockPage() {
         return;
       }
       data = eanData;
+    } else {
+      alert("Vnesite EAN ali ime zdravila");
+      return;
     }
 
     setMedicine(data);
@@ -99,22 +102,17 @@ export default function ScanStockPage() {
 
       {!medicine ? (
         <>
-          <div className="mb-4">
-            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
-              <input
-                type="checkbox"
-                checked={searchByName}
-                onChange={(e) => setSearchByName(e.target.checked)}
-                className="w-4 h-4 rounded border-slate-300"
-              />
-              Išči po imenu zdravila
-            </label>
-          </div>
-
           <input
             value={ean}
             onChange={(e) => setEan(e.target.value)}
-            placeholder={searchByName ? "Ime zdravila" : "EAN"}
+            placeholder="EAN"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 mb-4 [-webkit-text-fill-color:#0f172a]"
+          />
+
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ime zdravila"
             className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 mb-6 [-webkit-text-fill-color:#0f172a]"
           />
 
@@ -126,14 +124,12 @@ export default function ScanStockPage() {
               Poišči zdravilo
             </button>
 
-            {!searchByName && (
-              <button
-                onClick={() => setShowScanner(true)}
-                className="h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
-              >
-                📷 Skeniraj
-              </button>
-            )}
+            <button
+              onClick={() => setShowScanner(true)}
+              className="h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
+            >
+              📷 Skeniraj
+            </button>
           </div>
 
           {showScanner && (
