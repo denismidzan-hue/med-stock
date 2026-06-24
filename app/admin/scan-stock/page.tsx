@@ -31,16 +31,22 @@ export default function ScanStockPage() {
   }
 
   async function findMedicineByCode(code: string) {
+    alert("Iščem: " + code);
+
     const { data } = await supabase
       .from("medicines")
       .select("*")
       .eq("ean", code)
       .single();
 
+    console.log(data);
+
     if (!data) {
       alert("Zdravilo ni najdeno");
       return;
     }
+
+    alert("Najdeno: " + data.name);
 
     setEan(code);
     setMedicine(data);
@@ -109,6 +115,8 @@ export default function ScanStockPage() {
             <BarcodeScanner
               onScan={(code) => {
                 const parsed = parseGS1(code);
+
+                alert("GTIN: " + parsed.gtin);
 
                 findMedicineByCode(parsed.gtin);
 
