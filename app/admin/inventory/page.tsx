@@ -167,12 +167,12 @@ export default function InventoryPage() {
           placeholder="Išči zdravilo..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-md bg-white border border-slate-200 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full max-w-md rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-emerald-500"
         />
       </div>
 
       <div className="mb-4">
-        <label className="flex gap-2 items-center">
+        <label className="flex gap-2 items-center text-slate-700 font-medium">
           <input
             type="checkbox"
             checked={showExpiringOnly}
@@ -199,7 +199,7 @@ export default function InventoryPage() {
                 batch_number: e.target.value,
               })
             }
-            className="border border-slate-200 p-3 w-full mb-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
 
           <input
@@ -211,7 +211,7 @@ export default function InventoryPage() {
                 expiry_date: e.target.value,
               })
             }
-            className="border border-slate-200 p-3 w-full mb-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
 
           <input
@@ -223,7 +223,7 @@ export default function InventoryPage() {
                 quantity: Number(e.target.value),
               })
             }
-            className="border border-slate-200 p-3 w-full mb-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
 
           <button
@@ -236,7 +236,8 @@ export default function InventoryPage() {
       )}
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-        <table className="w-full table-fixed">
+        <div className="overflow-x-auto">
+          <table className="min-w-[900px] w-full table-fixed">
           <thead className="bg-slate-50">
             <tr>
               <th className="w-[40%] p-4 text-left">Zdravilo</th>
@@ -385,7 +386,8 @@ export default function InventoryPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );
