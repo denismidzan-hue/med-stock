@@ -330,6 +330,9 @@ export default function InventoryPage() {
                   return !earliest || expiry < earliest ? expiry : earliest;
                 }, null as Date | null);
 
+                // Count unique batches by batch number and expiry date
+                const uniqueBatches = new Set(batchList.map((batch: any) => `${batch.batch_number}_${batch.expiry_date}`)).size;
+
                 return (
                   <React.Fragment key={medicineId}>
                     <tr
@@ -354,7 +357,7 @@ export default function InventoryPage() {
                               {batchList[0].medicine_name}
                             </div>
                             <div className="text-sm text-slate-500">
-                              {batchList.length} serij
+                              {uniqueBatches} serij
                             </div>
                           </div>
                         </div>
