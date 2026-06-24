@@ -43,14 +43,18 @@ td {
   border: 1px solid #e5e7eb;
 }
 
-/* iOS Safari placeholder fix - make lighter */
-@supports (-webkit-touch-callout: none) {
+/* Mobile placeholder fix - make lighter on all mobile devices */
+@media (max-width: 768px) {
   input::placeholder {
     color: #94a3b8 !important;
-    opacity: 0.7 !important;
+    opacity: 0.5 !important;
   }
   input::-webkit-input-placeholder {
     color: #94a3b8 !important;
-    opacity: 0.7 !important;
+    opacity: 0.5 !important;
+  }
+  input::-moz-placeholder {
+    color: #94a3b8 !important;
+    opacity: 0.5 !important;
   }
 }
