@@ -69,31 +69,31 @@ export default function AddMedicinePage() {
         )}
 
         <div className="mb-5">
-          <label className="block mb-2 text-sm text-slate-600">
+          <label className="block mb-2 text-base font-medium text-slate-700">
             EAN koda
           </label>
           <input
             value={ean}
             onChange={(e) => setEan(e.target.value)}
             placeholder="1234567890123"
-            className="w-full h-14 px-4 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-slate-300"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-slate-300"
           />
         </div>
 
         <div className="mb-5">
-          <label className="block mb-2 text-sm text-slate-600">
+          <label className="block mb-2 text-base font-medium text-slate-700">
             Naziv zdravila
           </label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Aspirin 100 mg"
-            className="w-full h-14 px-4 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-slate-300"
+            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-slate-300"
           />
         </div>
 
         <div className="mb-8">
-          <label className="block mb-3 text-sm text-slate-600">
+          <label className="block mb-3 text-base font-medium text-slate-700">
             Minimalna zaloga
           </label>
           <div className="flex items-center justify-center gap-4">
@@ -101,18 +101,18 @@ export default function AddMedicinePage() {
               onClick={() =>
                 setMinStock(Math.max(1, minStock - 1))
               }
-              className="w-12 h-12 rounded-xl border border-slate-200"
+              className="w-12 h-12 rounded-xl border border-slate-300 text-slate-900 font-bold text-2xl bg-white"
             >
               −
             </button>
-            <div className="text-3xl font-bold w-24 text-center">
+            <div className="text-3xl font-bold text-slate-900 w-24 text-center">
               {minStock}
             </div>
             <button
               onClick={() =>
                 setMinStock(minStock + 1)
               }
-              className="w-12 h-12 rounded-xl border border-slate-200"
+              className="w-12 h-12 rounded-xl border border-slate-300 text-slate-900 font-bold text-2xl bg-white"
             >
               +
             </button>
@@ -121,7 +121,7 @@ export default function AddMedicinePage() {
 
         <button
           onClick={saveMedicine}
-          className="w-full h-14 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition"
+          className="w-full h-14 rounded-2xl bg-slate-900 text-white font-semibold text-lg hover:bg-slate-800 transition"
         >
           Shrani zdravilo
         </button>
