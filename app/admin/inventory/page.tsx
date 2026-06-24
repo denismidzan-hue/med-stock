@@ -167,7 +167,7 @@ export default function InventoryPage() {
           placeholder="Išči zdravilo..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-md rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full max-w-md rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 placeholder:opacity-50 outline-none focus:ring-2 focus:ring-emerald-500"
         />
       </div>
 
@@ -199,7 +199,7 @@ export default function InventoryPage() {
                 batch_number: e.target.value,
               })
             }
-            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 placeholder:opacity-50 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
 
           <input
@@ -211,7 +211,7 @@ export default function InventoryPage() {
                 expiry_date: e.target.value,
               })
             }
-            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 placeholder:opacity-50 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
 
           <input
@@ -223,7 +223,7 @@ export default function InventoryPage() {
                 quantity: Number(e.target.value),
               })
             }
-            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 placeholder:opacity-50 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
 
           <button
