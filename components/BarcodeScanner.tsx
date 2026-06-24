@@ -27,6 +27,8 @@ export default function BarcodeScanner({
 
           scanned = true;
 
+          alert("Skenirano: " + decodedText);
+
           try {
             await scanner.stop();
           } catch {}
