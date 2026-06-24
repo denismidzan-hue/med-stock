@@ -14,17 +14,34 @@ export default function ScanStockPage() {
   const [batchNumber, setBatchNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [showScanner, setShowScanner] = useState(false);
+  const [searchByName, setSearchByName] = useState(false);
 
   async function findMedicine() {
-    const { data } = await supabase
-      .from("medicines")
-      .select("*")
-      .eq("ean", ean)
-      .single();
+    let data;
+    if (searchByName) {
+      const { data: nameData } = await supabase
+        .from("medicines")
+        .select("*")
+        .ilike("name", `%${ean}%`)
+        .limit(1);
 
-    if (!data) {
-      alert("Zdravilo ni najdeno");
-      return;
+      if (!nameData || nameData.length === 0) {
+        alert("Zdravilo ni najdeno");
+        return;
+      }
+      data = nameData[0];
+    } else {
+      const { data: eanData } = await supabase
+        .from("medicines")
+        .select("*")
+        .eq("ean", ean)
+        .single();
+
+      if (!eanData) {
+        alert("Zdravilo ni najdeno");
+        return;
+      }
+      data = eanData;
     }
 
     setMedicine(data);
@@ -82,10 +99,22 @@ export default function ScanStockPage() {
 
       {!medicine ? (
         <>
+          <div className="mb-4">
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
+              <input
+                type="checkbox"
+                checked={searchByName}
+                onChange={(e) => setSearchByName(e.target.checked)}
+                className="w-4 h-4 rounded border-slate-300"
+              />
+              Išči po imenu zdravila
+            </label>
+          </div>
+
           <input
             value={ean}
             onChange={(e) => setEan(e.target.value)}
-            placeholder="EAN"
+            placeholder={searchByName ? "Ime zdravila" : "EAN"}
             className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 mb-6 [-webkit-text-fill-color:#0f172a]"
           />
 
@@ -97,12 +126,14 @@ export default function ScanStockPage() {
               Poišči zdravilo
             </button>
 
-            <button
-              onClick={() => setShowScanner(true)}
-              className="h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
-            >
-              📷 Skeniraj
-            </button>
+            {!searchByName && (
+              <button
+                onClick={() => setShowScanner(true)}
+                className="h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
+              >
+                📷 Skeniraj
+              </button>
+            )}
           </div>
 
           {showScanner && (
