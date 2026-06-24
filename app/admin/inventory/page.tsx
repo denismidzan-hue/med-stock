@@ -373,7 +373,7 @@ export default function InventoryPage() {
                       </td>
 
                       <td className="p-4">
-                        {isExpanded ? "" : (earliestExpiry ? getStatusBadge(earliestExpiry.toISOString()) : "-")}
+                        {isExpanded ? "▼" : (earliestExpiry ? getStatusBadge(earliestExpiry.toISOString()) : "-")}
                       </td>
 
                       <td className="p-4">
