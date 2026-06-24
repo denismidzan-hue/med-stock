@@ -381,57 +381,74 @@ export default function InventoryPage() {
                       </td>
                     </tr>
 
-                    {isExpanded && batchList.map((batch: any) => (
-                      <tr
-                        key={batch.id}
-                        className="border-b bg-slate-50 hover:bg-slate-100 transition"
-                      >
-                        <td className="p-4 pl-12">
-                          <div className="text-sm text-slate-600">
-                            {batch.medicine_name} {batch.batch_number}
-                          </div>
-                        </td>
+                    {isExpanded && (() => {
+                      // Group batches by batch number and expiry date
+                      const groupedByBatch = batchList.reduce((acc: Record<string, any[]>, batch: any) => {
+                        const key = `${batch.batch_number}_${batch.expiry_date}`;
+                        if (!acc[key]) {
+                          acc[key] = [];
+                        }
+                        acc[key].push(batch);
+                        return acc;
+                      }, {});
 
-                        <td className="p-4">
-                          {batch.batch_number}
-                        </td>
+                      return Object.entries(groupedByBatch).map(([key, batches]: [string, any[]]) => {
+                        const totalQuantity = batches.reduce((sum: number, b: any) => sum + b.quantity, 0);
+                        const firstBatch = batches[0];
 
-                        <td className="p-4 font-medium">
-                          {batch.quantity}
-                        </td>
+                        return (
+                          <tr
+                            key={key}
+                            className="border-b bg-slate-50 hover:bg-slate-100 transition"
+                          >
+                            <td className="p-4 pl-12">
+                              <div className="text-sm text-slate-600">
+                                {firstBatch.medicine_name} {firstBatch.batch_number}
+                              </div>
+                            </td>
 
-                        <td className="p-4">
-                          {new Date(batch.expiry_date).toLocaleDateString("sl-SI")}
-                        </td>
+                            <td className="p-4">
+                              {firstBatch.batch_number}
+                            </td>
 
-                        <td className="p-4">
-                          {getStatusBadge(batch.expiry_date)}
-                        </td>
+                            <td className="p-4 font-medium">
+                              {totalQuantity}
+                            </td>
 
-                        <td className="p-4">
-                          <div className="flex gap-2">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                editBatch(batch);
-                              }}
-                              className="text-slate-500 hover:text-slate-900"
-                            >
-                              ✏️
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                deleteBatch(batch.id);
-                              }}
-                              className="text-red-500 hover:text-red-700"
-                            >
-                              🗑️
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            <td className="p-4">
+                              {new Date(firstBatch.expiry_date).toLocaleDateString("sl-SI")}
+                            </td>
+
+                            <td className="p-4">
+                              {getStatusBadge(firstBatch.expiry_date)}
+                            </td>
+
+                            <td className="p-4">
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    editBatch(firstBatch);
+                                  }}
+                                  className="text-slate-500 hover:text-slate-900"
+                                >
+                                  ✏️
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteBatch(firstBatch.id);
+                                  }}
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  🗑️
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      });
+                    })()}
                   </React.Fragment>
                 );
               });
