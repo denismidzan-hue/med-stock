@@ -15,6 +15,7 @@ export default function ScanStockPage() {
   const [batchNumber, setBatchNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [showScanner, setShowScanner] = useState(false);
+  const [showManualEntry, setShowManualEntry] = useState(false);
 
   async function findMedicine() {
     let data;
@@ -102,69 +103,83 @@ export default function ScanStockPage() {
 
       {!medicine ? (
         <>
-          <div className="md:hidden mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <button
               onClick={() => setShowScanner(true)}
-              className="w-full h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
+              className="h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
             >
               📷 Skeniraj
             </button>
-          </div>
 
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ime zdravila"
-            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 mb-4 [-webkit-text-fill-color:#0f172a]"
-          />
-
-          <input
-            value={ean}
-            onChange={(e) => setEan(e.target.value)}
-            placeholder="EAN"
-            className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 mb-6 [-webkit-text-fill-color:#0f172a]"
-          />
-
-          <div className="grid grid-cols-2 gap-3 mb-6">
             <button
-              onClick={findMedicine}
+              onClick={() => setShowManualEntry(!showManualEntry)}
               className="h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition"
             >
-              Poišči zdravilo
-            </button>
-
-            <button
-              onClick={() => setShowScanner(true)}
-              className="hidden md:block h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
-            >
-              📷 Skeniraj
+              Poišči ročno
             </button>
           </div>
 
           {showScanner && (
-            <BarcodeScanner
-              onScan={(code) => {
-                const parsed = parseGS1(code);
+            <div className="mb-6">
+              <BarcodeScanner
+                onScan={(code) => {
+                  const parsed = parseGS1(code);
 
-                findMedicineByCode(parsed.gtin);
+                  findMedicineByCode(parsed.gtin);
 
-                if (parsed.lot) {
-                  setBatchNumber(parsed.lot);
-                }
+                  if (parsed.lot) {
+                    setBatchNumber(parsed.lot);
+                  }
 
-                if (parsed.expiry.length === 6) {
-                  const yy = parsed.expiry.slice(0, 2);
-                  const mm = parsed.expiry.slice(2, 4);
-                  const dd = parsed.expiry.slice(4, 6);
+                  if (parsed.expiry.length === 6) {
+                    const yy = parsed.expiry.slice(0, 2);
+                    const mm = parsed.expiry.slice(2, 4);
+                    const dd = parsed.expiry.slice(4, 6);
 
-                  setExpiryDate(`20${yy}-${mm}-${dd}`);
-                }
+                    setExpiryDate(`20${yy}-${mm}-${dd}`);
+                  }
 
-                setTimeout(() => {
-                  setShowScanner(false);
-                }, 500);
-              }}
-            />
+                  setTimeout(() => {
+                    setShowScanner(false);
+                  }, 500);
+                }}
+              />
+            </div>
+          )}
+
+          {showManualEntry && (
+            <div className="mb-6 bg-slate-50 rounded-2xl p-6">
+              <h3 className="text-lg font-semibold text-slate-900 mb-4">Ročno iskanje</h3>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Ime zdravila"
+                className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 mb-4 [-webkit-text-fill-color:#0f172a]"
+              />
+
+              <input
+                value={ean}
+                onChange={(e) => setEan(e.target.value)}
+                placeholder="EAN"
+                className="w-full h-14 px-4 rounded-2xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 mb-6 [-webkit-text-fill-color:#0f172a]"
+              />
+
+              <button
+                onClick={findMedicine}
+                className="w-full h-14 rounded-2xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
+              >
+                Poišči zdravilo
+              </button>
+            </div>
+          )}
+
+          {showScanner && (
+            <button
+              onClick={() => setShowManualEntry(!showManualEntry)}
+              className="w-full h-14 rounded-2xl border border-slate-300 bg-white text-slate-900 font-medium hover:bg-slate-50 transition"
+            >
+              Poišči ročno
+            </button>
           )}
         </>
       ) : (
