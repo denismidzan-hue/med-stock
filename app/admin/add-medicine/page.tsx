@@ -54,13 +54,15 @@ export default function AddMedicinePage() {
           <div className="mb-6">
             <BarcodeScanner
               onScan={(code) => {
+                alert(code);
+
                 const parsed = parseGS1(code);
+
+                alert(JSON.stringify(parsed));
 
                 setEan(parsed.gtin || code);
 
-                setTimeout(() => {
-                  setShowScanner(false);
-                }, 500);
+                setShowScanner(false);
               }}
             />
           </div>
