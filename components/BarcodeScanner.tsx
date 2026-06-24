@@ -17,7 +17,7 @@ export default function BarcodeScanner({
 
     const config = {
       fps: 10,
-      qrbox: isMobile ? { width: 250, height: 250 } : 250,
+      qrbox: isMobile ? { width: 300, height: 300 } : 250,
     };
 
     scanner
@@ -50,5 +50,5 @@ export default function BarcodeScanner({
     };
   }, [onScan]);
 
-  return <div id="reader" className="w-full h-64 md:h-80" />;
+  return <div id="reader" className="w-full h-80 md:h-96" />;
 }
