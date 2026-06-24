@@ -179,26 +179,32 @@ export default function ScanStockPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 mb-6">
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
-              <div className="text-xs uppercase text-slate-500 mb-1">
+            <div>
+              <label className="block mb-2 text-sm font-medium text-slate-700">
                 Serija
-              </div>
-              <div className="font-semibold text-lg">
-                {batchNumber}
-              </div>
+              </label>
+              <input
+                value={batchNumber}
+                onChange={(e) => setBatchNumber(e.target.value)}
+                placeholder="Vnesi serijo"
+                className="w-full h-12 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 placeholder:opacity-40 outline-none focus:ring-2 focus:ring-slate-300 [-webkit-text-fill-color:#0f172a]"
+              />
             </div>
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
-              <div className="text-xs uppercase text-slate-500 mb-1">
+            <div>
+              <label className="block mb-2 text-sm font-medium text-slate-700">
                 Rok uporabe
-              </div>
-              <div className="font-semibold text-lg">
-                {expiryDate ? new Date(expiryDate).toLocaleDateString("sl-SI") : "-"}
-              </div>
+              </label>
+              <input
+                type="date"
+                value={expiryDate}
+                onChange={(e) => setExpiryDate(e.target.value)}
+                className="w-full h-12 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-slate-300 [-webkit-text-fill-color:#0f172a]"
+              />
             </div>
           </div>
 
           <div className="mb-6">
-            <label className="block mb-3 font-medium">
+            <label className="block mb-3 text-base font-medium text-slate-900">
               Količina
             </label>
             <div className="flex items-center justify-center gap-4">
@@ -210,7 +216,7 @@ export default function ScanStockPage() {
               >
                 −
               </button>
-              <div className="text-3xl font-bold w-20 text-center">
+              <div className="text-3xl font-bold w-20 text-center text-slate-900">
                 {quantity}
               </div>
               <button
