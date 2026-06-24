@@ -42,3 +42,35 @@ th,
 td {
   border: 1px solid #e5e7eb;
 }
+
+/* Desktop placeholder - make lighter */
+@media (min-width: 769px) {
+  input::placeholder {
+    color: #cbd5e1 !important;
+    opacity: 0.6 !important;
+  }
+  input::-webkit-input-placeholder {
+    color: #cbd5e1 !important;
+    opacity: 0.6 !important;
+  }
+  input::-moz-placeholder {
+    color: #cbd5e1 !important;
+    opacity: 0.6 !important;
+  }
+}
+
+/* Mobile placeholder - even lighter */
+@media (max-width: 768px) {
+  input::placeholder {
+    color: #cbd5e1 !important;
+    opacity: 0.3 !important;
+  }
+  input::-webkit-input-placeholder {
+    color: #cbd5e1 !important;
+    opacity: 0.3 !important;
+  }
+  input::-moz-placeholder {
+    color: #cbd5e1 !important;
+    opacity: 0.3 !important;
+  }
+}
