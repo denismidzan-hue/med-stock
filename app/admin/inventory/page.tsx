@@ -236,15 +236,14 @@ export default function InventoryPage() {
       )}
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-        <div className="overflow-x-auto md:overflow-visible">
-          <table className="min-w-[900px] w-full table-fixed">
+        <table className="w-full table-auto">
           <thead className="bg-slate-50">
             <tr>
-              <th className="w-[40%] p-4 text-left">Zdravilo</th>
-              <th className="w-40 p-4 text-left">Serija</th>
+              <th className="p-4 text-left">Zdravilo</th>
+              <th className="p-4 text-left">Serija</th>
               <th
                 onClick={() => handleSort("quantity")}
-                className="w-32 p-4 text-left cursor-pointer select-none hover:text-slate-900"
+                className="p-4 text-left cursor-pointer select-none hover:text-slate-900"
               >
                 <div className="flex items-center gap-1">
                   Količina
@@ -259,7 +258,7 @@ export default function InventoryPage() {
               </th>
               <th
                 onClick={() => handleSort("expiry")}
-                className="w-40 p-4 text-left cursor-pointer select-none hover:text-slate-900"
+                className="p-4 text-left cursor-pointer select-none hover:text-slate-900"
               >
                 <div className="flex items-center gap-1">
                   Rok uporabe
@@ -272,7 +271,7 @@ export default function InventoryPage() {
                   )}
                 </div>
               </th>
-              <th className="w-40 p-4 text-left">Status</th>
+              <th className="p-4 text-left">Status</th>
               <th className="p-4"></th>
             </tr>
           </thead>
@@ -386,8 +385,7 @@ export default function InventoryPage() {
               </tr>
             ))}
           </tbody>
-          </table>
-        </div>
+        </table>
       </div>
     </div>
   );
